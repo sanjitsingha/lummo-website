@@ -10,9 +10,11 @@ const INDICATOR_EM = 0.8;
 const ANIMATION_MS = 170;
 const OFF_FLASH_MS = 900;
 const GLIDE_S = 0.07;
+/** Each typed letter fades in from a soft blur over this long. */
+const CHAR_IN_MS = 260;
 const RHYTHM = [0, 30, -15, 45, 10, -20, 60, 5, -10, 35];
 const BACKSPACE_RHYTHM = [0, 6, -3, 8, 2, -4, 10, 1, -2, 6];
-const typingDelay = (char: string, index: number) => 95 + Math.round(RHYTHM[index % RHYTHM.length] * 0.55) + (char === " " ? 60 : 0);
+const typingDelay = (char: string, index: number) => 82 + Math.round(RHYTHM[index % RHYTHM.length] * 0.3) + (char === " " ? 35 : 0);
 const backspaceDelay = (index: number) => 52 + BACKSPACE_RHYTHM[index % BACKSPACE_RHYTHM.length];
 
 type Point = { x: number; y: number };
@@ -26,17 +28,36 @@ export default function CapsLockFeature() {
   return (
     <section
       aria-labelledby="caps-lock-title"
-      className="relative isolate mt-[101px] mb-8 flex min-h-[55.25rem] flex-col items-center justify-between overflow-hidden bg-[#ffe51f] px-6 pt-[240px] pb-[160px] text-[#3a3a3c] sm:mt-[133px] sm:mb-12 sm:min-h-[57.25rem] sm:px-10 lg:mt-[165px] lg:mb-16 lg:min-h-[59.25rem] lg:px-20"
+      data-snap
+      className="relative isolate flex min-h-[100dvh] flex-col items-center justify-between overflow-hidden bg-[#ffe51f] px-6 pt-[clamp(96px,22dvh,240px)] pb-[clamp(56px,15dvh,160px)] text-[#3a3a3c] sm:px-10 lg:px-20"
     >
       <LumioCapsHeadline />
-      <div className="absolute inset-x-6 bottom-[160px] max-w-[34rem] sm:inset-x-10 lg:inset-x-20">
-        <h2 id="caps-lock-title" className="text-[1.4rem] font-medium leading-[1.3] sm:text-[1.6rem]">
-          Caps Lock Indicator
-        </h2>
-        <p className="mt-2 max-w-[34rem] text-[1.125rem] leading-[1.5] tracking-[0.02em] text-[#5c5c5c] sm:text-xl">
-          A beautifully animated Caps Lock indicator that keeps you in the loop with every keystroke. Small detail,
-          seriously satisfying experience.
-        </p>
+      <div className="absolute inset-x-6 bottom-[clamp(56px,15dvh,160px)] flex flex-col gap-6 sm:inset-x-10 lg:inset-x-20 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+        {/* the key icon sits in its own column, so the title and the paragraph share one left edge */}
+        <div className="flex min-w-0 max-w-[36rem] items-start gap-[0.45em] text-[1.4rem] sm:text-[1.6rem]">
+          <span
+            aria-hidden
+            className="mt-[0.025em] inline-flex size-[1.25em] shrink-0 items-center justify-center rounded-[0.32em] border border-white/[0.14] bg-[rgba(40,40,44,0.96)] shadow-[0_4px_12px_rgba(0,0,0,0.22)]"
+          >
+            <CapsLockGlyph on size="100%" />
+          </span>
+          <div className="min-w-0">
+            <h2 id="caps-lock-title" className="font-medium leading-[1.3]">
+              Caps Lock Indicator
+            </h2>
+            <p className="mt-2 max-w-[28rem] text-[0.8125rem] leading-[1.6] tracking-[0.01em] text-[#5c5c5c] sm:text-[0.9375rem]">
+              The Mac&apos;s Caps Lock indicator, rebuilt for Windows and Linux and made better. It pops up right where
+              you&apos;re typing, glides along with your cursor and lights up the moment Caps Lock goes on. Small
+              detail, seriously satisfying experience.
+            </p>
+          </div>
+        </div>
+        <div className="max-w-[22rem] text-[0.8125rem] leading-[1.6] tracking-[0.01em] sm:text-[0.9375rem] lg:text-right">
+          <p className="font-medium text-[#3a3a3c]">Works everywhere you type.</p>
+          <p className="mt-1 text-[#5c5c5c]">
+            The terminal, Word, a password box or any text field at all. If there&apos;s a cursor, it shows up.
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -51,7 +72,10 @@ function LumioCapsHeadline() {
   const [appearance, setAppearance] = useState(0);
   const [size, setSize] = useState(0);
   const [target, setTarget] = useState<Point | null>(null);
+  const [caretAt, setCaretAt] = useState<Point | null>(null);
   const glide = useGlide(target, appearance);
+  // the caret glides along the line, but jumps straight to the start of a new one
+  const caretGlide = useGlide(caretAt, caretAt?.y ?? 0);
 
   const measure = useCallback(() => {
     const node = caret.current;
@@ -59,8 +83,10 @@ function LumioCapsHeadline() {
     if (!node || !container) return;
     const body = Math.round(parseFloat(getComputedStyle(container).fontSize) * INDICATOR_EM);
     const next = { x: Math.round(node.offsetLeft - body * 0.1), y: Math.round(node.offsetTop + node.offsetHeight + body * 0.15) };
+    const at = { x: node.offsetLeft, y: node.offsetTop };
     setSize(body);
     setTarget((current) => (current?.x === next.x && current.y === next.y ? current : next));
+    setCaretAt((current) => (current?.x === at.x && current.y === at.y ? current : at));
   }, []);
 
   useLayoutEffect(measure, [text, measure]);
@@ -140,21 +166,34 @@ function LumioCapsHeadline() {
   return (
     <div
       ref={root}
-      className="relative pb-[1em] text-center text-[2.5rem] font-normal leading-[1.25] tracking-[-0.025em] text-[#3a3a3c] sm:text-[3rem] lg:text-[5rem]"
+      className="relative pb-[1em] text-center text-[2rem] font-normal leading-[1.25] tracking-[-0.025em] text-[#3a3a3c] sm:text-[2.5rem] lg:text-[3.75rem]"
     >
       <h2>
         <span className="sr-only">{`${HEADLINE}${plain(LINES[0])}`}</span>
         <span aria-hidden className="block whitespace-pre-wrap">
           {HEADLINE}
-          {text}
-          <span
-            ref={caret}
-            key={text}
-            className="ml-[0.04em] inline-block h-[1.05em] w-[0.055em] rounded-full bg-[#c7c7cc] align-[-0.2em]"
-            style={{ animation: "lumio-caret 1.06s linear infinite" }}
-          />
+          {Array.from(text, (char, index) => (
+            <span key={index} className="lumio-char">
+              {char}
+            </span>
+          ))}
+          {/* keeps the caret's place in the line; the visible caret glides to it */}
+          <span ref={caret} className="ml-[0.04em] inline-block h-[1.05em] w-[0.055em] align-[-0.2em]" />
         </span>
       </h2>
+      <div
+        ref={caretGlide}
+        aria-hidden
+        className="pointer-events-none absolute left-0 top-0 h-[1.05em] w-[0.055em]"
+        style={{ visibility: caretAt ? "visible" : "hidden" }}
+      >
+        {/* remounts on every keystroke, so it stays solid while typing and only blinks when idle */}
+        <div
+          key={text}
+          className="h-full w-full rounded-full bg-[#c7c7cc]"
+          style={{ animation: "lumio-caret 1.06s ease-in-out infinite" }}
+        />
+      </div>
       <div
         ref={glide}
         aria-hidden
@@ -183,14 +222,17 @@ function LumioCapsHeadline() {
         </div>
       </div>
       <style>{`
-        @keyframes lumio-caret { 0%, 50% { opacity: 1 } 50.01%, 100% { opacity: 0 } }
+        @keyframes lumio-caret { 0%, 40% { opacity: 1 } 55%, 85% { opacity: 0 } 100% { opacity: 1 } }
         @keyframes lumio-pop { from { opacity: 0; transform: scale(0.86) } to { opacity: 1; transform: scale(1) } }
+        @keyframes lumio-char-in { from { opacity: 0; filter: blur(0.08em) } to { opacity: 1; filter: blur(0) } }
+        .lumio-char { animation: lumio-char-in ${CHAR_IN_MS}ms cubic-bezier(0.22, 1, 0.36, 1) both }
+        @media (prefers-reduced-motion: reduce) { .lumio-char { animation: none } }
       `}</style>
     </div>
   );
 }
 
-function CapsLockGlyph({ on, size }: { on: boolean; size: number }) {
+function CapsLockGlyph({ on, size }: { on: boolean; size: number | string }) {
   const color = "#f5f5f7";
   const led = on ? "#30d158" : "rgba(152,152,157,0.55)";
   const transition = "fill-opacity 160ms ease, stroke-opacity 160ms ease, stroke-width 160ms ease, fill 160ms ease";

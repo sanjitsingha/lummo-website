@@ -1,3 +1,3 @@
-/** The site's blue pill button (download, donate): the same gradient as the hero's. */
+/** The site's blue pill button (download, donate): the logo's gradient with a soft light rim. */
 export const PILL_BUTTON =
-  "inline-flex h-[52px] items-center justify-center gap-3 rounded-full border border-[#2f45e0]/40 bg-[linear-gradient(180deg,#3446fa_0%,#5a80fe_100%)] px-7 text-[17px] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_1px_2px_rgba(30,45,180,0.2),0_8px_20px_-8px_rgba(52,70,250,0.55)] transition-[filter,transform] duration-200 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#3446fa] active:scale-[0.98] lg:h-[56px] lg:text-[18px]";
+  "inline-flex h-[52px] items-center justify-center gap-3 rounded-full bg-[linear-gradient(180deg,#4fa2fd_0%,#0971e6_100%)] px-7 text-[17px] text-white shadow-[inset_0_0_4px_0.5px_rgba(255,255,255,0.55)] transition-[filter,transform] duration-200 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1076e8] active:scale-[0.98] lg:h-[56px] lg:text-[18px]";

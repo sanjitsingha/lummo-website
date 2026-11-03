@@ -7,9 +7,16 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const title = "lummo — Spotlight & Caps Lock indicator for Windows and Linux";
+const description =
+  "lummo brings the Mac's Spotlight search and Caps Lock indicator to Windows and Linux. Hit alt + space to find apps, files and folders. Free download.";
+
 export const metadata: Metadata = {
-  title: "lummo — find anything on your PC",
-  description: "Just hit a shortcut, type what you're looking for, and let your PC do the finding.",
+  title,
+  description,
+  applicationName: "lummo",
+  openGraph: { title, description, siteName: "lummo", type: "website" },
+  twitter: { card: "summary", title, description },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

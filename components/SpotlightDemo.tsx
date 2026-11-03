@@ -26,7 +26,7 @@ const LAPTOP = { width: 2976, height: 1663 };
 const SCREEN = { x: 358, y: 41, width: 2259, height: 1511 };
 
 /** The scene is laid out on a desktop this wide, then scaled to the screen: smaller makes the panel bigger. */
-const DESKTOP_WIDTH = 840;
+const DESKTOP_WIDTH = 1050;
 const DESKTOP_HEIGHT = (DESKTOP_WIDTH * SCREEN.height) / SCREEN.width;
 const PANEL_WIDTH = 660;
 

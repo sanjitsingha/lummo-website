@@ -12,20 +12,22 @@ export default async function DownloadSection() {
     <section
       id="download"
       aria-labelledby="download-title"
-      className="flex scroll-mt-6 flex-col items-center px-6 pt-20 pb-28 text-center sm:px-10 sm:pt-28 sm:pb-36 lg:pt-32 lg:pb-44"
+      data-snap
+      className="flex min-h-[100dvh] flex-col items-center justify-center px-6 py-24 text-center sm:px-10"
     >
       <h2
         id="download-title"
         className="max-w-[15ch] text-balance text-[clamp(2rem,3.6vw,3.5rem)] font-normal leading-[1.12] tracking-[-0.03em] text-[#434343] md:max-w-none"
       >
         Get lummo. It&apos;s{" "}
-        <span className="bg-[linear-gradient(90deg,#3446fa_0%,#5a80fe_100%)] bg-clip-text text-transparent">
+        {/* the download buttons' gradient, top to bottom like on the buttons */}
+        <span className="bg-[linear-gradient(180deg,#4fa2fd_0%,#0971e6_100%)] bg-clip-text text-transparent">
           completely free.
         </span>
       </h2>
       <p className="mt-3 max-w-[34ch] text-[clamp(1.05rem,1.5vw,1.5rem)] leading-[1.55] tracking-[-0.01em] text-[#6e6e6e] sm:max-w-none">
-        No trial, no account, no catch.
-        <br className="hidden sm:inline" /> Download it, hit the shortcut and start finding.
+        The Mac&apos;s favourite combo, now delivering to Windows and Linux.
+        <br className="hidden sm:inline" /> Spotlight and the Caps Lock indicator, served hot. It&apos;s on the house.
       </p>
 
       <div className="mt-12 flex w-full max-w-[42rem] flex-col items-center gap-3 sm:mt-16 sm:flex-row sm:justify-center sm:gap-4">

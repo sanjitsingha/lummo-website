@@ -48,3 +48,14 @@ body {
     transform: translateY(0);
   }
 }
+
+/* DonateSection */
+@keyframes donate-twinkle {
+  0%,
+  100% {
+    opacity: var(--dim);
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
