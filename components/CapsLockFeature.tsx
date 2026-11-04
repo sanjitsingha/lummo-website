@@ -6,7 +6,7 @@ const HEADLINE = "Hey";
 const LINES: (string | { caps: string })[][] = [
   [" ", { caps: "A" }, "pple, cute feature.\n", { caps: "W" }, "e thought ", { caps: "W" }, "e could do it ", { caps: "B" }, "etter"],
 ];
-const INDICATOR_EM = 0.8;
+const INDICATOR_EM = 1.3;
 const ANIMATION_MS = 170;
 const OFF_FLASH_MS = 900;
 const GLIDE_S = 0.07;
@@ -33,14 +33,7 @@ export default function CapsLockFeature() {
     >
       <LumioCapsHeadline />
       <div className="absolute inset-x-6 bottom-[clamp(56px,15dvh,160px)] flex flex-col gap-6 sm:inset-x-10 lg:inset-x-20 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
-        {/* the key icon sits in its own column, so the title and the paragraph share one left edge */}
-        <div className="flex min-w-0 max-w-[36rem] items-start gap-[0.45em] text-[1.4rem] sm:text-[1.6rem]">
-          <span
-            aria-hidden
-            className="mt-[0.025em] inline-flex size-[1.25em] shrink-0 items-center justify-center rounded-[0.32em] border border-white/[0.14] bg-[rgba(40,40,44,0.96)] shadow-[0_4px_12px_rgba(0,0,0,0.22)]"
-          >
-            <CapsLockGlyph on size="100%" />
-          </span>
+        <div className="min-w-0 max-w-[36rem] text-[1.4rem] sm:text-[1.6rem]">
           <div className="min-w-0">
             <h2 id="caps-lock-title" className="font-medium leading-[1.3]">
               Caps Lock Indicator
@@ -52,9 +45,12 @@ export default function CapsLockFeature() {
             </p>
           </div>
         </div>
-        <div className="max-w-[22rem] text-[0.8125rem] leading-[1.6] tracking-[0.01em] sm:text-[0.9375rem] lg:text-right">
-          <p className="font-medium text-[#3a3a3c]">Works everywhere you type.</p>
-          <p className="mt-1 text-[#5c5c5c]">
+        <div className="max-w-[24rem] text-[0.8125rem] leading-[1.6] tracking-[0.01em] sm:text-[0.9375rem] lg:text-right">
+          {/* set like the "Caps Lock Indicator" title opposite */}
+          <p className="text-[1.4rem] font-medium leading-[1.3] tracking-normal text-[#3a3a3c] sm:text-[1.6rem]">
+            Works everywhere you type.
+          </p>
+          <p className="mt-2 text-[#5c5c5c]">
             The terminal, Word, a password box or any text field at all. If there&apos;s a cursor, it shows up.
           </p>
         </div>
@@ -166,7 +162,7 @@ function LumioCapsHeadline() {
   return (
     <div
       ref={root}
-      className="relative pb-[1em] text-center text-[2rem] font-normal leading-[1.25] tracking-[-0.025em] text-[#3a3a3c] sm:text-[2.5rem] lg:text-[3.75rem]"
+      className="relative pb-[1.5em] text-center text-[2rem] font-normal leading-[1.25] tracking-[-0.025em] text-[#3a3a3c] sm:text-[2.5rem] lg:text-[3.75rem]"
     >
       <h2>
         <span className="sr-only">{`${HEADLINE}${plain(LINES[0])}`}</span>

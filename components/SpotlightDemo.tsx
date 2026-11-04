@@ -29,6 +29,11 @@ const SCREEN = { x: 358, y: 41, width: 2259, height: 1511 };
 const DESKTOP_WIDTH = 1050;
 const DESKTOP_HEIGHT = (DESKTOP_WIDTH * SCREEN.height) / SCREEN.width;
 const PANEL_WIDTH = 660;
+/**
+ * Like the app, the panel's top stays put and results only grow downwards: its window opens 22% down the
+ * screen and the panel sits 36px inside it (center_on_active_monitor and SPOTLIGHT_MARGIN in the app).
+ */
+const PANEL_TOP = DESKTOP_HEIGHT * 0.22 + 36;
 
 /** Settles gently, without a bounce. */
 const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
@@ -252,7 +257,7 @@ export default function SpotlightDemo({
             fontFamily: FONT,
           }}
         >
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-x-0 flex justify-center" style={{ top: PANEL_TOP }}>
             <Panel ui={ui} sections={sections} />
           </div>
         </div>

@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import CapsLockFeature from "@/components/CapsLockFeature";
-import DonateSection from "@/components/DonateSection";
 import DownloadSection from "@/components/DownloadSection";
 import FaqSection from "@/components/FaqSection";
 import NavDownload from "@/components/NavDownload";
@@ -33,9 +32,6 @@ export default function Home() {
         </Link>
         <nav className="flex items-center gap-7 text-[15px] font-normal text-[#202020] sm:gap-10 sm:text-base lg:gap-12 lg:text-[17px]">
           <NavDownload />
-          <a href="#support" className="transition-colors duration-150 hover:text-black/50">
-            support
-          </a>
         </nav>
       </header>
 
@@ -48,10 +44,10 @@ export default function Home() {
           className="flex h-[100dvh] min-h-fit flex-col items-center px-4 pt-16 pb-8 sm:px-6 sm:pt-[76px] sm:pb-10 lg:pt-[88px] lg:pb-12"
         >
           <section className="flex shrink-0 flex-col items-center pt-16 text-center sm:pt-18">
-            <h1 className="mt-4 max-w-[18ch] text-balance text-[clamp(1.5rem,2.5vw,2.6rem)] font-normal leading-[1.12] tracking-[-0.03em] text-[#434343] sm:mt-6 md:max-w-none lg:mt-8">
+            <h1 className="mt-4 max-w-[18ch] text-balance text-[clamp(1.625rem,2.6vw,2.75rem)] font-normal leading-[1.12] tracking-[-0.03em] text-[#434343] sm:mt-6 md:max-w-none lg:mt-8">
               Because life&apos;s too short to find files manually.
             </h1>
-            <p className="mt-4 max-w-[36ch] sm:mt-5 lg:mt-6 text-[clamp(0.875rem,0.95vw,1.05rem)] leading-[1.55] tracking-[-0.01em] text-[#6e6e6e] sm:max-w-none">
+            <p className="mt-4 max-w-[36ch] sm:mt-5 lg:mt-6 text-[clamp(1.0625rem,1.3vw,1.375rem)] leading-[1.55] tracking-[-0.01em] text-[#6e6e6e] sm:max-w-none">
               Just hit <Key>alt</Key>
               <span className="mx-[0.35em] text-[#a1a1a1]">+</span>
               <Key wide>space</Key>, type what you&apos;re looking for,
@@ -70,7 +66,6 @@ export default function Home() {
         <CapsLockFeature />
         <DownloadSection />
         <FaqSection />
-        <DonateSection />
       </main>
     </div>
   );

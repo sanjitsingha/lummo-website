@@ -26,17 +26,23 @@ export default async function WhatIsLummo() {
       />
       <h2
         id="what-is-lummo-title"
-        className="mt-6 max-w-[18ch] text-balance text-[clamp(1.25rem,1.9vw,2rem)] font-normal leading-[1.25] tracking-[-0.03em] text-[#434343] md:max-w-none lg:mt-8"
+        className="mt-8 max-w-[18ch] text-balance text-[clamp(1.625rem,2.6vw,2.75rem)] font-normal leading-[1.25] tracking-[-0.03em] text-[#434343] md:max-w-none lg:mt-12"
       >
-        Hey Apple, thanks for the inspiration.
+        Hey{" "}
+        <span className="whitespace-nowrap">
+          Apple
+          <AppleEmoji src="/lummo/emoji/waving-hand.png" emoji="👋" />,
+        </span>{" "}
+        thanks for the inspiration.
         <br className="hidden sm:inline" /> We took it a little{" "}
         <span className="whitespace-nowrap">
           further.
-          <OrangeSlice />
+          {/* an orange where you'd expect an apple */}
+          <AppleEmoji src="/lummo/emoji/tangerine.png" emoji="🍊" />
         </span>
       </h2>
       {/* the tall lines leave room for the search pill and for the Caps Lock badge that hangs below its line */}
-      <p className="mt-4 max-w-[50em] text-pretty text-[clamp(0.8125rem,0.85vw,0.9375rem)] leading-[1.9] tracking-[-0.01em] text-[#6e6e6e] sm:mt-6">
+      <p className="mt-6 max-w-[50em] text-pretty text-[clamp(0.875rem,0.95vw,1.0625rem)] leading-[2.1] tracking-[-0.01em] text-[#6e6e6e] sm:mt-8">
         A little upgrade to your everyday desktop. Bringing the convenience of a smart <SearchPill>Spotlight Search</SearchPill>{" "}
         and a sleek{" "}
         <span className="whitespace-nowrap">
@@ -46,28 +52,25 @@ export default async function WhatIsLummo() {
         to Windows and Linux, with a few thoughtful improvements of our own. Built with passion,
         designed for productivity, and completely free for everyone.
       </p>
-      <div className="mt-10 flex w-full justify-center sm:mt-12">
+      <div className="mt-14 flex w-full justify-center sm:mt-16">
         <SystemDownload windows={release?.windows ?? RELEASES_URL} linux={release?.deb ?? RELEASES_URL} />
       </div>
     </section>
   );
 }
 
-/** An orange where you'd expect an apple. */
-function OrangeSlice() {
+/** An emoji drawn as Apple draws it, so Windows and Linux visitors see the iOS look rather than their system's. */
+function AppleEmoji({ src, emoji }: { src: string; emoji: string }) {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden className="ml-[0.25em] inline-block size-[0.9em] align-[-0.1em]">
-      <circle cx="16" cy="16" r="15.5" fill="#f28b0c" />
-      <circle cx="16" cy="16" r="13" fill="#fff1d2" />
-      <circle cx="16" cy="16" r="11.5" fill="#ffb21f" />
-      {/* the white walls between the segments */}
-      <g stroke="#fff1d2" strokeWidth="1.4" strokeLinecap="round">
-        {[0, 45, 90, 135].map((angle) => (
-          <line key={angle} x1="16" y1="4.5" x2="16" y2="27.5" transform={`rotate(${angle} 16 16)`} />
-        ))}
-      </g>
-      <circle cx="16" cy="16" r="1.8" fill="#fff1d2" />
-    </svg>
+    <Image
+      src={src}
+      alt={emoji}
+      width={64}
+      height={64}
+      loading="eager"
+      draggable={false}
+      className="ml-[0.25em] inline-block size-[1.1em] select-none align-[-0.2em]"
+    />
   );
 }
 
@@ -86,7 +89,7 @@ function CapsLockCaret() {
     <span aria-hidden className="relative ml-[0.2em] inline-block h-[1.15em] w-[1.5px] align-[-0.22em]">
       <span className="absolute inset-0 rounded-full bg-[#b5b5ba] motion-safe:animate-[spotlight-blink_1.06s_infinite]" />
       {/* it hangs over the next line like the real one does over your text, so a white ring keeps it apart */}
-      <span className="absolute top-[calc(100%+0.25em)] left-[-0.2em] flex size-[1.3em] items-center justify-center rounded-[0.32em] border border-white/[0.14] bg-[rgba(40,40,44,0.96)] shadow-[0_0_0_2px_#fff,0_4px_12px_rgba(0,0,0,0.22)]">
+      <span className="absolute top-[calc(100%+0.25em)] left-[-0.2em] flex size-[1.6em] items-center justify-center rounded-[0.4em] border border-white/[0.14] bg-[rgba(40,40,44,0.96)] shadow-[0_0_0_2px_#fff,0_4px_12px_rgba(0,0,0,0.22)]">
         <CapsLockGlyph on size="100%" />
       </span>
     </span>
