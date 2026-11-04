@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -12,10 +13,12 @@ const description =
   "lummo brings the Mac's Spotlight search and Caps Lock indicator to Windows and Linux. Hit alt + space to find apps, files and folders. Free download.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title,
   description,
   applicationName: "lummo",
-  openGraph: { title, description, siteName: "lummo", type: "website" },
+  alternates: { canonical: "/" },
+  openGraph: { title, description, url: "/", siteName: "lummo", type: "website" },
   twitter: { card: "summary", title, description },
 };
 

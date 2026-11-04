@@ -1,8 +1,10 @@
 import { cacheLife } from "next/cache";
 
 const REPO = "sanjitsingha/lumio";
+/** The app's source code. */
+export const REPO_URL = `https://github.com/${REPO}`;
 /** The release page: where the buttons fall back to when a file can't be looked up. */
-export const RELEASES_URL = `https://github.com/${REPO}/releases/latest`;
+export const RELEASES_URL = `${REPO_URL}/releases/latest`;
 
 /** Direct download links to the latest installers. */
 export type Release = {

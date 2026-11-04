@@ -5,6 +5,7 @@ import CapsLockFeature from "@/components/CapsLockFeature";
 import DownloadSection from "@/components/DownloadSection";
 import FaqSection from "@/components/FaqSection";
 import NavDownload from "@/components/NavDownload";
+import SiteFooter from "@/components/SiteFooter";
 import SnapScroll from "@/components/SnapScroll";
 import SpotlightDemo from "@/components/SpotlightDemo";
 import WhatIsLummo from "@/components/WhatIsLummo";
@@ -67,6 +68,7 @@ export default function Home() {
         <DownloadSection />
         <FaqSection />
       </main>
+      <SiteFooter />
     </div>
   );
 }
