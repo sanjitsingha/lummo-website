@@ -232,7 +232,7 @@ function LumioCapsHeadline() {
   );
 }
 
-function CapsLockGlyph({ on, size }: { on: boolean; size: number | string }) {
+export function CapsLockGlyph({ on, size }: { on: boolean; size: number | string }) {
   const color = "#f5f5f7";
   const led = on ? "#30d158" : "rgba(152,152,157,0.55)";
   const transition = "fill-opacity 160ms ease, stroke-opacity 160ms ease, stroke-width 160ms ease, fill 160ms ease";

@@ -8,7 +8,7 @@ import FaqSection from "@/components/FaqSection";
 import NavDownload from "@/components/NavDownload";
 import SnapScroll from "@/components/SnapScroll";
 import SpotlightDemo from "@/components/SpotlightDemo";
-import SpotlightIntro from "@/components/SpotlightIntro";
+import WhatIsLummo from "@/components/WhatIsLummo";
 
 export default function Home() {
   return (
@@ -40,13 +40,18 @@ export default function Home() {
       </header>
 
       <main className="flex flex-col">
-        {/* together with the header (64 / 76 / 88px tall) the hero fills exactly one screen */}
-        <section className="flex h-[calc(100dvh-64px)] min-h-fit flex-col items-center px-4 pb-8 sm:h-[calc(100dvh-76px)] sm:px-6 sm:pb-10 lg:h-[calc(100dvh-88px)] lg:pb-12">
+        <WhatIsLummo />
+        {/* a full screen of its own; the top padding matches the header (64 / 76 / 88px tall),
+            so the text and laptop sit where they did when the header was right above them */}
+        <section
+          data-snap
+          className="flex h-[100dvh] min-h-fit flex-col items-center px-4 pt-16 pb-8 sm:px-6 sm:pt-[76px] sm:pb-10 lg:pt-[88px] lg:pb-12"
+        >
           <section className="flex shrink-0 flex-col items-center pt-16 text-center sm:pt-18">
             <h1 className="mt-4 max-w-[18ch] text-balance text-[clamp(1.5rem,2.5vw,2.6rem)] font-normal leading-[1.12] tracking-[-0.03em] text-[#434343] sm:mt-6 md:max-w-none lg:mt-8">
               Because life&apos;s too short to find files manually.
             </h1>
-            <p className="mt-2.5 max-w-[36ch] text-[clamp(0.875rem,0.95vw,1.05rem)] leading-[1.55] tracking-[-0.01em] text-[#6e6e6e] sm:max-w-none">
+            <p className="mt-4 max-w-[36ch] sm:mt-5 lg:mt-6 text-[clamp(0.875rem,0.95vw,1.05rem)] leading-[1.55] tracking-[-0.01em] text-[#6e6e6e] sm:max-w-none">
               Just hit <Key>alt</Key>
               <span className="mx-[0.35em] text-[#a1a1a1]">+</span>
               <Key wide>space</Key>, type what you&apos;re looking for,
@@ -54,14 +59,13 @@ export default function Home() {
             </p>
           </section>
 
-          {/* the laptop takes whatever height the text above and below leaves it, keeping the picture's shape;
+          {/* the laptop takes whatever height the text above leaves it, keeping the picture's shape;
               it's positioned out of flow so its full size never stretches the screen-tall hero */}
           <div className="relative mt-6 min-h-48 w-full flex-1 sm:mt-8">
             <div className="absolute top-0 left-1/2 flex aspect-[2976/1663] h-full max-w-full -translate-x-1/2 items-center sm:max-w-[min(74%,1024px)] lg:max-w-[min(70%,1024px)]">
               <SpotlightDemo eager />
             </div>
           </div>
-          <SpotlightIntro />
         </section>
         <CapsLockFeature />
         <DownloadSection />

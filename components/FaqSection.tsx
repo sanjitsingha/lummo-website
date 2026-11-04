@@ -58,7 +58,7 @@ export default function FaqSection() {
       data-snap
       className="flex min-h-[100dvh] items-center justify-center bg-[#f5f5f7] px-6 py-24 sm:px-10"
     >
-      <div className="w-full max-w-[44rem]">
+      <div className="w-full max-w-[56rem]">
         {/* no visible heading: the questions speak for themselves, but screen readers and search still get one */}
         <h2 id="faq-title" className="sr-only">
           Frequently asked questions
@@ -67,11 +67,11 @@ export default function FaqSection() {
           {FAQS.map(({ question, answer }, index) => (
             // sharing a name makes the browser close the open one when another opens
             <details key={question} name="faq" open={index === 0} className="faq-item group border-b border-black/[0.08]">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 rounded-sm py-4 text-[0.9375rem] text-[#202020] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1076e8] sm:text-base [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 rounded-sm py-5 text-base text-[#202020] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1076e8] sm:text-lg lg:text-xl [&::-webkit-details-marker]:hidden">
                 {question}
                 <svg
-                  width="16"
-                  height="16"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -83,7 +83,7 @@ export default function FaqSection() {
                   <path d="M12 5v14M5 12h14" />
                 </svg>
               </summary>
-              <p className="max-w-[40rem] pr-10 pb-5 text-[0.875rem] leading-[1.65] text-[#6e6e6e] sm:text-[0.9375rem]">
+              <p className="max-w-[48rem] pr-12 pb-6 text-[0.9375rem] leading-[1.65] text-[#6e6e6e] sm:text-base lg:text-[1.0625rem]">
                 {answer}
               </p>
             </details>
