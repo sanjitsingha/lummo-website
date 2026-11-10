@@ -41,6 +41,9 @@ export default async function NavDownload() {
             <li key={name}>
               <a
                 href={href}
+                data-umami-event="download"
+                data-umami-event-platform={name}
+                data-umami-event-placement="navbar"
                 className="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[15px] text-[#202020] transition-colors duration-150 hover:bg-black/[0.05] focus-visible:bg-black/[0.05] focus-visible:outline-none"
               >
                 for {name}

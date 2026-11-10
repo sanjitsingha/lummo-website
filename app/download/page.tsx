@@ -42,7 +42,13 @@ export default async function DownloadPage() {
         <p className="mt-5 flex flex-wrap justify-center gap-x-2 gap-y-1 text-[15px] text-[#8e8e8e]">
           <span className="whitespace-nowrap">
             {url ? "Didn't start? " : null}
-            <a href={url ?? RELEASES_URL} className="text-[#1076e8] underline-offset-2 hover:underline">
+            <a
+              href={url ?? RELEASES_URL}
+              data-umami-event="download"
+              data-umami-event-platform="windows"
+              data-umami-event-placement="download-page"
+              className="text-[#1076e8] underline-offset-2 hover:underline"
+            >
               {url ? "Download again" : "Download from GitHub"}
             </a>
           </span>
@@ -51,7 +57,13 @@ export default async function DownloadPage() {
           </span>
           <span className="whitespace-nowrap">
             On Linux?{" "}
-            <a href={release?.deb ?? RELEASES_URL} className="text-[#1076e8] underline-offset-2 hover:underline">
+            <a
+              href={release?.deb ?? RELEASES_URL}
+              data-umami-event="download"
+              data-umami-event-platform="linux"
+              data-umami-event-placement="download-page"
+              className="text-[#1076e8] underline-offset-2 hover:underline"
+            >
               Get the .deb
             </a>
           </span>

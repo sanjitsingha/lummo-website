@@ -53,7 +53,7 @@ export default async function WhatIsLummo() {
         designed for productivity, and completely free for everyone.
       </p>
       <div className="mt-14 flex w-full justify-center sm:mt-16">
-        <SystemDownload linux={release?.deb ?? RELEASES_URL} />
+        <SystemDownload linux={release?.deb ?? RELEASES_URL} placement="hero" />
       </div>
     </section>
   );

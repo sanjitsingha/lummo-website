@@ -31,7 +31,7 @@ export default async function DownloadSection() {
       </p>
 
       <div className="mt-12 flex w-full justify-center sm:mt-16">
-        <SystemDownload linux={release?.deb ?? RELEASES_URL} />
+        <SystemDownload linux={release?.deb ?? RELEASES_URL} placement="download-section" />
       </div>
     </section>
   );
