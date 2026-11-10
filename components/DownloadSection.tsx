@@ -2,8 +2,8 @@ import SystemDownload from "@/components/SystemDownload";
 import { getLatestRelease, RELEASES_URL } from "@/lib/release";
 
 /**
- * Download lummo: one click fetches the installer for the visitor's system
- * straight from the latest GitHub release.
+ * Download lummo: one click fetches the .deb on Linux straight from the latest GitHub release, and
+ * takes Windows visitors to the download page, which starts the installer.
  */
 export default async function DownloadSection() {
   const release = await getLatestRelease();
@@ -31,7 +31,7 @@ export default async function DownloadSection() {
       </p>
 
       <div className="mt-12 flex w-full justify-center sm:mt-16">
-        <SystemDownload windows={release?.windows ?? RELEASES_URL} linux={release?.deb ?? RELEASES_URL} />
+        <SystemDownload linux={release?.deb ?? RELEASES_URL} />
       </div>
     </section>
   );

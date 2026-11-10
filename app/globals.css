@@ -17,6 +17,19 @@ body {
   font-family: var(--font-sans);
 }
 
+/* InstallSteps: the ring around what to click */
+@keyframes click-ring {
+  0% {
+    opacity: 0.95;
+    transform: scale(0.92);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
 /* SpotlightDemo */
 @keyframes spotlight-blink {
   0%,

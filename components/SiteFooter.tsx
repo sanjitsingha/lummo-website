@@ -2,8 +2,9 @@ import Image from "next/image";
 import { REPO_URL } from "@/lib/release";
 
 const LINKS = [
-  { label: "Download", href: "#download" },
-  { label: "FAQ", href: "#faq" },
+  // from the root, so they work on the download page too
+  { label: "Download", href: "/#download" },
+  { label: "FAQ", href: "/#faq" },
   { label: "GitHub", href: REPO_URL, external: true },
 ];
 

@@ -1,11 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
-import type { ReactNode } from "react";
 import CapsLockFeature from "@/components/CapsLockFeature";
 import DownloadSection from "@/components/DownloadSection";
 import FaqSection from "@/components/FaqSection";
-import NavDownload from "@/components/NavDownload";
+import Key from "@/components/Key";
 import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
 import SnapScroll from "@/components/SnapScroll";
 import SpotlightDemo from "@/components/SpotlightDemo";
 import WhatIsLummo from "@/components/WhatIsLummo";
@@ -14,27 +12,7 @@ export default function Home() {
   return (
     <div className="flex min-h-[100dvh] flex-col overflow-x-clip">
       <SnapScroll />
-      <header className="mx-auto flex w-full max-w-[1512px] shrink-0 items-center justify-between px-6 py-4 sm:px-10 sm:py-5 lg:px-16 lg:py-6">
-        <Link
-          href="/"
-          aria-label="lummo home"
-          className="flex items-center select-none transition-opacity hover:opacity-80"
-        >
-          <Image
-            src="/lummo/logo.png"
-            alt=""
-            width={616}
-            height={616}
-            sizes="40px"
-            loading="eager"
-            draggable={false}
-            className="h-8 w-8 sm:h-9 sm:w-9 lg:h-10 lg:w-10"
-          />
-        </Link>
-        <nav className="flex items-center gap-7 text-[15px] font-normal text-[#202020] sm:gap-10 sm:text-base lg:gap-12 lg:text-[17px]">
-          <NavDownload />
-        </nav>
-      </header>
+      <SiteHeader />
 
       <main className="flex flex-col">
         <WhatIsLummo />
@@ -70,17 +48,6 @@ export default function Home() {
       </main>
       <SiteFooter />
     </div>
-  );
-}
-
-/** A raised keycap that sits on the text's baseline and scales with it; `wide` draws a spacebar. */
-function Key({ children, wide = false }: { children: ReactNode; wide?: boolean }) {
-  return (
-    <kbd
-      className={`inline-flex h-[1.75em] items-center justify-center rounded-[0.45em] border border-black/[0.12] bg-[linear-gradient(180deg,#ffffff_0%,#f1f1f3_100%)] px-[0.6em] font-sans text-[0.75em] font-medium tracking-normal text-[#434343] shadow-[inset_0_1px_0_#fff,0_2px_0_rgba(0,0,0,0.1),0_4px_8px_-3px_rgba(0,0,0,0.18)] ${wide ? "min-w-[5em]" : "min-w-[2.4em]"}`}
-    >
-      {children}
-    </kbd>
   );
 }
 

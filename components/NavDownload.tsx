@@ -7,7 +7,8 @@ import { getLatestRelease, RELEASES_URL } from "@/lib/release";
 export default async function NavDownload() {
   const release = await getLatestRelease();
   const options = [
-    { name: "windows", format: ".exe", href: release?.windows ?? RELEASES_URL },
+    // the download page starts the installer and shows how to open it past Windows' warning
+    { name: "windows", format: ".exe", href: "/download" },
     { name: "linux", format: ".deb", href: release?.deb ?? RELEASES_URL },
   ];
 
