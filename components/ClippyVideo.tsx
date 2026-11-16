@@ -50,7 +50,7 @@ export default function ClippyVideo() {
   };
 
   return (
-    <div className="relative size-full overflow-hidden rounded-[clamp(10px,1.3vw,20px)] bg-[#1c1c1e] shadow-[0_0_0_1px_rgba(28,28,30,0.06),0_40px_80px_-36px_rgba(54,46,160,0.5)]">
+    <div className="relative size-full overflow-hidden rounded-[clamp(6px,0.6vw,10px)] bg-[#1c1c1e] shadow-[0_0_0_1px_rgba(255,255,255,0.1)]">
       <video
         ref={video}
         muted

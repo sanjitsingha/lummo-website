@@ -17,6 +17,7 @@ export default function Home() {
 
       <main className="flex flex-col">
         <WhatIsLummo />
+        <ClippyFeature />
         {/* a full screen of its own; the top padding matches the header (64 / 76 / 88px tall),
             so the text and laptop sit where they did when the header was right above them */}
         <section
@@ -44,7 +45,6 @@ export default function Home() {
           </div>
         </section>
         <CapsLockFeature />
-        <ClippyFeature />
         <DownloadSection />
         <FaqSection />
       </main>
