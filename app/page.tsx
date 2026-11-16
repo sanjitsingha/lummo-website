@@ -1,4 +1,5 @@
 import CapsLockFeature from "@/components/CapsLockFeature";
+import ClippyFeature from "@/components/ClippyFeature";
 import DownloadSection from "@/components/DownloadSection";
 import FaqSection from "@/components/FaqSection";
 import Key from "@/components/Key";
@@ -43,6 +44,7 @@ export default function Home() {
           </div>
         </section>
         <CapsLockFeature />
+        <ClippyFeature />
         <DownloadSection />
         <FaqSection />
       </main>
