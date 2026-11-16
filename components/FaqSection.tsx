@@ -5,7 +5,7 @@ const FAQS: { question: string; answer: ReactNode }[] = [
   {
     question: "What is lummo?",
     answer:
-      "A small app that brings two Mac favourites to Windows and Linux: a Spotlight search bar that finds anything on your PC, and a Caps Lock indicator that pops up right where you're typing.",
+      "A small app that brings two Mac favourites to Windows and Linux: a Spotlight search bar that finds anything on your PC, and a Caps Lock indicator that pops up right where you're typing. On Windows you also get Clippy, a clipboard history that drops down from the top of your screen.",
   },
   {
     question: "Is it really free?",
@@ -15,7 +15,7 @@ const FAQS: { question: string; answer: ReactNode }[] = [
   {
     question: "Which systems does it run on?",
     answer:
-      "Windows and Linux. Windows gets a regular installer, and Linux gets a .deb package for Ubuntu, Debian and the distros built on them.",
+      "Windows and Linux. Windows gets a regular installer, and Linux gets a .deb package for Ubuntu, Debian and the distros built on them. Clippy is the one exception: it's for Windows 10 and 11 only.",
   },
   {
     question: "How do I open Spotlight?",
@@ -30,6 +30,11 @@ const FAQS: { question: string; answer: ReactNode }[] = [
     question: "What does the Caps Lock indicator do?",
     answer:
       "It shows a little badge right where you're typing the moment Caps Lock turns on, so you never TYPE A WHOLE SENTENCE LIKE THIS by accident.",
+  },
+  {
+    question: "What does Clippy do?",
+    answer:
+      "It keeps your last 50 copies, text, images and files, in a notch at the top centre of your screen. Rest your mouse there to open it, click a copy to put it back on your clipboard, or drag a file or image into another app. It all stays on your PC, and each copy deletes itself after a day, or after however long you pick, from an hour up to a year.",
   },
   {
     question: "Is there a Mac version?",

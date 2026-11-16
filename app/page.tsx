@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import CapsLockFeature from "@/components/CapsLockFeature";
+import ClippyFeature from "@/components/ClippyFeature";
 import DonateSection from "@/components/DonateSection";
 import DownloadSection from "@/components/DownloadSection";
 import FaqSection from "@/components/FaqSection";
@@ -68,6 +69,7 @@ export default function Home() {
           </div>
         </section>
         <CapsLockFeature />
+        <ClippyFeature />
         <DownloadSection />
         <FaqSection />
         <DonateSection />
