@@ -11,12 +11,12 @@ export default function InstallSteps({ file }: { file: string }) {
   return (
     <ol className="grid w-full max-w-[28rem] gap-5 text-left lg:max-w-[72rem] lg:grid-cols-3 lg:gap-6">
       <Step number={1} title="Open the file" picture={<DownloadsPanel file={file} />}>
-        Click <strong className="font-medium text-[#434343]">{file}</strong> in your browser&apos;s downloads, or
+        Click <strong className="font-medium text-ink">{file}</strong> in your browser&apos;s downloads, or
         find it in your Downloads folder.
       </Step>
       <Step number={2} title="Click “More info”" picture={<SmartScreen file={file} />}>
         Windows double-checks apps it hasn&apos;t seen many times yet, and lummo is new. Click{" "}
-        <strong className="font-medium text-[#434343]">More info</strong> in the blue box.
+        <strong className="font-medium text-ink">More info</strong> in the blue box.
       </Step>
       <Step number={3} title="Click “Run anyway”" picture={<SmartScreen file={file} expanded />}>
         The installer opens and sets lummo up in a few seconds. That&apos;s all, there&apos;s nothing else to
@@ -28,22 +28,22 @@ export default function InstallSteps({ file }: { file: string }) {
 
 function Step({ number, title, picture, children }: { number: number; title: string; picture: ReactNode; children: ReactNode }) {
   return (
-    <li className="flex flex-col overflow-hidden rounded-[28px] border border-black/[0.06] bg-white shadow-[0_16px_40px_-20px_rgba(0,0,0,0.18)]">
+    <li className="flex flex-col overflow-hidden rounded-[20px] border border-line bg-surface">
       {/* a soft desktop for the picture to sit on */}
       <div
         aria-hidden
-        className="@container flex aspect-[5/4] items-center justify-center bg-[linear-gradient(160deg,#dcebfd_0%,#eef4fb_55%,#f5f5f7_100%)]"
+        className="@container flex aspect-[5/4] items-center justify-center bg-[linear-gradient(160deg,#17345a_0%,#14233a_55%,#131315_100%)]"
       >
         {picture}
       </div>
       <div className="flex flex-col gap-2 px-6 pt-5 pb-7">
-        <h3 className="flex items-center gap-3 text-[17px] text-[#202020] lg:text-[18px]">
+        <h3 className="flex items-center gap-3 text-[17px] text-ink lg:text-[18px]">
           <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(180deg,#4fa2fd_0%,#0971e6_100%)] text-[14px] text-white shadow-[inset_0_0_4px_0.5px_rgba(255,255,255,0.55)]">
             {number}
           </span>
           {title}
         </h3>
-        <p className="text-[15px] leading-[1.6] text-[#6e6e6e]">{children}</p>
+        <p className="text-[15px] leading-[1.6] text-ink-2">{children}</p>
       </div>
     </li>
   );

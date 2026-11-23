@@ -5,7 +5,7 @@ const FAQS: { question: string; answer: ReactNode }[] = [
   {
     question: "What is lummo?",
     answer:
-      "A small app that brings two Mac favourites to Windows and Linux: a Spotlight search bar that finds anything on your PC, and a Caps Lock indicator that pops up right where you're typing. On Windows you also get Clippy, a clipboard history that drops down from the top of your screen.",
+      "A free productivity app for Windows and Linux. Press one hotkey and a search bar opens over whatever you're doing, so you can find apps and files, convert currencies and measurements, do quick math and get back anything you copied.",
   },
   {
     question: "Is it really free?",
@@ -15,16 +15,17 @@ const FAQS: { question: string; answer: ReactNode }[] = [
   {
     question: "Which systems does it run on?",
     answer:
-      "Windows and Linux. Windows gets a regular installer, and Linux gets a .deb package for Ubuntu, Debian and the distros built on them. Clippy is the one exception: it's for Windows 10 and 11 only.",
+      "Windows and Linux. Windows gets a regular installer, and Linux gets a .deb package for Ubuntu, Debian and the distros built on them.",
   },
   {
     question: "How do I open Spotlight?",
-    answer: "Press alt + space from anywhere. Type what you're after and press enter to open the top result.",
+    answer:
+      "Press alt + space on Windows or ctrl + space on Linux, from anywhere. Type what you're after and press enter to open the top result.",
   },
   {
     question: "What can Spotlight find?",
     answer:
-      "Your apps, files and folders, as you type. It does quick sums on the spot too, and anything it can't find on your PC goes straight to a web search.",
+      "Your apps, files and folders, as you type. It also answers currency and measurement conversions and quick sums on the spot, and anything it can't find on your PC goes straight to a web search.",
   },
   {
     question: "What does the Caps Lock indicator do?",
@@ -32,20 +33,20 @@ const FAQS: { question: string; answer: ReactNode }[] = [
       "It shows a little badge right where you're typing the moment Caps Lock turns on, so you never TYPE A WHOLE SENTENCE LIKE THIS by accident.",
   },
   {
-    question: "What does Clippy do?",
+    question: "How does the clipboard history work?",
     answer:
-      "It keeps your last 50 copies, text, images and files, in a notch at the top centre of your screen. Rest your mouse there to open it, click a copy to put it back on your clipboard, or drag a file or image into another app. It all stays on your PC, and each copy deletes itself after a day, or after however long you pick, from an hour up to a year.",
+      "lummo keeps your recent copies: text, images and files. On Windows, rest your mouse at the top centre of your screen to open them. On Linux, press tab in an empty Spotlight. Click a copy to put it back on your clipboard. It all stays on your PC, and copies delete themselves after a day by default.",
   },
   {
     question: "Is there a Mac version?",
-    answer: "Nope, and there doesn't need to be. Macs already have both. lummo is for everyone else.",
+    answer: "Not right now. lummo is built for Windows and Linux.",
   },
   {
     question: "How do I get updates?",
     answer: (
       <>
         Every new version goes up on{" "}
-        <a href={RELEASES_URL} className="text-[#1076e8] underline-offset-2 hover:underline">
+        <a href={RELEASES_URL} className="text-accent underline-offset-2 hover:underline">
           GitHub
         </a>
         , and the download buttons on this page always point to the latest one.
@@ -60,19 +61,17 @@ export default function FaqSection() {
     <section
       id="faq"
       aria-labelledby="faq-title"
-      data-snap
-      className="flex min-h-[100dvh] items-center justify-center bg-[#f5f5f7] px-6 py-24 sm:px-10"
+      className="flex justify-center px-6 pb-28 sm:px-10 lg:pb-40"
     >
-      <div className="w-full max-w-[56rem]">
-        {/* no visible heading: the questions speak for themselves, but screen readers and search still get one */}
-        <h2 id="faq-title" className="sr-only">
-          Frequently asked questions
+      <div className="w-full max-w-[44rem]">
+        <h2 id="faq-title" className="mb-10 text-center text-[20px] font-medium tracking-[-0.015em] text-ink">
+          Questions, answered
         </h2>
-        <div className="border-t border-black/[0.08]">
+        <div className="border-t border-line">
           {FAQS.map(({ question, answer }, index) => (
             // sharing a name makes the browser close the open one when another opens
-            <details key={question} name="faq" open={index === 0} className="faq-item group border-b border-black/[0.08]">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 rounded-sm py-5 text-base text-[#202020] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1076e8] sm:text-lg lg:text-xl [&::-webkit-details-marker]:hidden">
+            <details key={question} name="faq" open={index === 0} className="faq-item group border-b border-line">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 rounded-sm py-5 text-[15px] font-medium text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:text-base [&::-webkit-details-marker]:hidden">
                 {question}
                 <svg
                   width="20"
@@ -82,13 +81,13 @@ export default function FaqSection() {
                   stroke="currentColor"
                   strokeWidth="1.75"
                   strokeLinecap="round"
-                  className="shrink-0 text-[#8e8e8e] transition-transform duration-300 group-open:rotate-45"
+                  className="shrink-0 text-ink-3 transition-transform duration-300 group-open:rotate-45"
                   aria-hidden
                 >
                   <path d="M12 5v14M5 12h14" />
                 </svg>
               </summary>
-              <p className="max-w-[48rem] pr-12 pb-6 text-[0.9375rem] leading-[1.65] text-[#6e6e6e] sm:text-base lg:text-[1.0625rem]">
+              <p className="max-w-[48rem] pr-10 pb-6 text-[0.9375rem] leading-[1.65] text-ink-2">
                 {answer}
               </p>
             </details>

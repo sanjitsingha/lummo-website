@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getLatestRelease, RELEASES_URL } from "@/lib/release";
 
 /**
@@ -14,9 +15,9 @@ export default async function NavDownload() {
 
   return (
     <div className="group relative">
-      <a
-        href="#download"
-        className="flex items-center gap-1.5 transition-colors duration-150 group-hover:text-black/50"
+      <Link
+        href="/#download"
+        className="flex items-center gap-1.5 transition-colors duration-150 group-hover:text-ink-2"
       >
         download
         <svg
@@ -33,10 +34,10 @@ export default async function NavDownload() {
         >
           <path d="m6 9 6 6 6-6" />
         </svg>
-      </a>
+      </Link>
       {/* the top padding bridges the gap, so the menu stays open while the pointer travels down to it */}
-      <div className="invisible absolute top-full left-1/2 z-20 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-[opacity,translate,visibility] duration-200 ease-out group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-        <ul className="min-w-[13rem] rounded-2xl border border-black/[0.06] bg-white/90 p-1.5 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.22)] backdrop-blur-xl">
+      <div className="invisible absolute top-full right-0 z-20 translate-y-1 pt-3 opacity-0 transition-[opacity,translate,visibility] duration-200 ease-out group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+        <ul className="min-w-[13rem] rounded-2xl border border-line bg-raised/95 p-1.5 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl">
           {options.map(({ name, format, href }) => (
             <li key={name}>
               <a
@@ -44,10 +45,10 @@ export default async function NavDownload() {
                 data-umami-event="download"
                 data-umami-event-platform={name}
                 data-umami-event-placement="navbar"
-                className="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[15px] text-[#202020] transition-colors duration-150 hover:bg-black/[0.05] focus-visible:bg-black/[0.05] focus-visible:outline-none"
+                className="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[15px] text-ink transition-colors duration-150 hover:bg-white/[0.08] focus-visible:bg-white/[0.08] focus-visible:outline-none"
               >
                 for {name}
-                <span className="ml-auto text-[12px] text-[#a1a1a1]">{format}</span>
+                <span className="ml-auto text-[12px] text-ink-3">{format}</span>
               </a>
             </li>
           ))}

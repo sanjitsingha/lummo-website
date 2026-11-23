@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import { SITE_URL } from "@/lib/site";
@@ -9,9 +9,9 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const title = "lummo Space - Spotlight & Caps Lock indicator for Windows and Linux";
+const title = "lummo Space - Spotlight search and productivity tools for Windows and Linux";
 const description =
-  "lummo brings the Mac's Spotlight search and Caps Lock indicator to Windows and Linux. Hit alt + space to find apps, files and folders. Free download.";
+  "Find apps and files, convert currencies and measurements, do quick math and bring back anything you copied, all from one hotkey. Free for Windows and Linux.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -21,6 +21,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: { title, description, url: "/", siteName: "lummo", type: "website" },
   twitter: { card: "summary", title, description },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0b",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

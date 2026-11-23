@@ -27,19 +27,19 @@ export default async function DownloadPage() {
   return (
     <div className="flex min-h-[100dvh] flex-col overflow-x-clip">
       <SiteHeader />
-      <main className="flex flex-1 flex-col items-center px-6 pt-8 pb-24 text-center sm:px-10 lg:pt-14">
+      <main className="flex flex-1 flex-col items-center px-6 pt-32 pb-24 text-center sm:px-10 lg:pt-40">
         {url && <StartDownload url={url} />}
-        <h1 className="max-w-[16ch] text-balance text-[clamp(2rem,3.6vw,3.5rem)] font-normal leading-[1.12] tracking-[-0.03em] text-[#434343] md:max-w-none">
+        <h1 className="max-w-[16ch] text-balance text-[clamp(2rem,3.6vw,3.5rem)] font-normal leading-[1.12] tracking-[-0.03em] text-ink md:max-w-none">
           {url ? "Your download " : "Get lummo "}
           <span className="bg-[linear-gradient(180deg,#4fa2fd_0%,#0971e6_100%)] bg-clip-text text-transparent">
             {url ? "has started." : "for Windows."}
           </span>
         </h1>
-        <p className="mt-3 max-w-[36ch] text-[clamp(1.05rem,1.5vw,1.5rem)] leading-[1.55] tracking-[-0.01em] text-[#6e6e6e] sm:max-w-none">
+        <p className="mt-3 max-w-[36ch] text-[clamp(1.05rem,1.5vw,1.5rem)] leading-[1.55] tracking-[-0.01em] text-ink-2 sm:max-w-none">
           Windows will ask you to double-check it before it runs.
           <br className="hidden sm:inline" /> Here&apos;s exactly what to click.
         </p>
-        <p className="mt-5 flex flex-wrap justify-center gap-x-2 gap-y-1 text-[15px] text-[#8e8e8e]">
+        <p className="mt-5 flex flex-wrap justify-center gap-x-2 gap-y-1 text-[15px] text-ink-3">
           <span className="whitespace-nowrap">
             {url ? "Didn't start? " : null}
             <a
@@ -47,12 +47,12 @@ export default async function DownloadPage() {
               data-umami-event="download"
               data-umami-event-platform="windows"
               data-umami-event-placement="download-page"
-              className="text-[#1076e8] underline-offset-2 hover:underline"
+              className="text-accent underline-offset-2 hover:underline"
             >
               {url ? "Download again" : "Download from GitHub"}
             </a>
           </span>
-          <span aria-hidden className="text-[#c7c7cc]">
+          <span aria-hidden className="text-ink-3">
             ·
           </span>
           <span className="whitespace-nowrap">
@@ -62,7 +62,7 @@ export default async function DownloadPage() {
               data-umami-event="download"
               data-umami-event-platform="linux"
               data-umami-event-placement="download-page"
-              className="text-[#1076e8] underline-offset-2 hover:underline"
+              className="text-accent underline-offset-2 hover:underline"
             >
               Get the .deb
             </a>
@@ -73,31 +73,31 @@ export default async function DownloadPage() {
           <InstallSteps file={file} />
         </div>
 
-        <p className="mt-12 max-w-[36ch] text-[clamp(1.05rem,1.4vw,1.375rem)] leading-[1.7] tracking-[-0.01em] text-[#6e6e6e] sm:max-w-none lg:mt-16">
+        <p className="mt-12 max-w-[36ch] text-[clamp(1.05rem,1.4vw,1.375rem)] leading-[1.7] tracking-[-0.01em] text-ink-2 sm:max-w-none lg:mt-16">
           Then lummo is ready. Just hit{" "}
           <span className="whitespace-nowrap">
             <Key>alt</Key>
-            <span className="mx-[0.35em] text-[#a1a1a1]">+</span>
+            <span className="mx-[0.35em] text-ink-3">+</span>
             <Key wide>space</Key>
           </span>
         </p>
 
-        <aside className="mt-16 w-full max-w-[44rem] rounded-[28px] bg-[#f5f5f7] px-6 py-7 text-left sm:px-9 sm:py-8">
-          <h2 className="text-[17px] text-[#202020] lg:text-[18px]">Why does Windows warn about lummo?</h2>
-          <p className="mt-2 text-[15px] leading-[1.65] text-[#6e6e6e]">
+        <aside className="mt-16 w-full max-w-[44rem] rounded-[20px] border border-line bg-surface px-6 py-7 text-left sm:px-9 sm:py-8">
+          <h2 className="text-[17px] text-ink lg:text-[18px]">Why does Windows warn about lummo?</h2>
+          <p className="mt-2 text-[15px] leading-[1.65] text-ink-2">
             Windows shows that blue box for apps it hasn&apos;t seen many times yet, and lummo is brand new. It
             isn&apos;t a virus: lummo is free and open source, so anyone can read every line of its code on{" "}
-            <a href={REPO_URL} className="text-[#1076e8] underline-offset-2 hover:underline">
+            <a href={REPO_URL} className="text-accent underline-offset-2 hover:underline">
               GitHub
             </a>
             .
           </p>
-          <p className="mt-3 text-[15px] leading-[1.65] text-[#6e6e6e]">
+          <p className="mt-3 text-[15px] leading-[1.65] text-ink-2">
             Using Microsoft Edge? If it says the file &ldquo;isn&apos;t commonly downloaded&rdquo;, click the{" "}
-            <span className="text-[#434343]">⋯</span> next to it and choose{" "}
-            <span className="text-[#434343]">Keep</span>, then{" "}
-            <span className="text-[#434343]">Show more</span> and{" "}
-            <span className="text-[#434343]">Keep anyway</span>.
+            <span className="text-ink">⋯</span> next to it and choose{" "}
+            <span className="text-ink">Keep</span>, then{" "}
+            <span className="text-ink">Show more</span> and{" "}
+            <span className="text-ink">Keep anyway</span>.
           </p>
         </aside>
       </main>

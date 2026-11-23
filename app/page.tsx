@@ -1,78 +1,23 @@
-import CapsLockFeature from "@/components/CapsLockFeature";
-import ClippyFeature from "@/components/ClippyFeature";
+import CapsLockShowcase from "@/components/CapsLockShowcase";
 import DownloadSection from "@/components/DownloadSection";
 import FaqSection from "@/components/FaqSection";
-import Key from "@/components/Key";
+import FeatureGrid from "@/components/FeatureGrid";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
-import SnapScroll from "@/components/SnapScroll";
-import SpotlightDemo from "@/components/SpotlightDemo";
 import WhatIsLummo from "@/components/WhatIsLummo";
 
 export default function Home() {
   return (
-    <div className="flex min-h-[100dvh] flex-col overflow-x-clip">
-      <SnapScroll />
+    <div className="relative flex min-h-[100dvh] flex-col overflow-x-clip">
       <SiteHeader />
-
       <main className="flex flex-col">
         <WhatIsLummo />
-        <ClippyFeature />
-        {/* a full screen of its own; the top padding matches the header (64 / 76 / 88px tall),
-            so the text and laptop sit where they did when the header was right above them */}
-        <section
-          data-snap
-          className="flex h-[100dvh] min-h-fit flex-col items-center px-4 pt-16 pb-8 sm:px-6 sm:pt-[76px] sm:pb-10 lg:pt-[88px] lg:pb-12"
-        >
-          <section className="flex shrink-0 flex-col items-center pt-16 text-center sm:pt-18">
-            <h1 className="mt-4 max-w-[18ch] text-balance text-[clamp(1.625rem,2.6vw,2.75rem)] font-normal leading-[1.12] tracking-[-0.03em] text-[#434343] sm:mt-6 md:max-w-none lg:mt-8">
-              Because life&apos;s too short to find files manually.
-            </h1>
-            <p className="mt-4 max-w-[36ch] sm:mt-5 lg:mt-6 text-[clamp(1.0625rem,1.3vw,1.375rem)] leading-[1.55] tracking-[-0.01em] text-[#6e6e6e] sm:max-w-none">
-              Just hit <Key>alt</Key>
-              <span className="mx-[0.35em] text-[#a1a1a1]">+</span>
-              <Key wide>space</Key>, type what you&apos;re looking for,
-              <br className="hidden sm:inline" /> and let your PC do the finding.
-            </p>
-          </section>
-
-          {/* the laptop takes whatever height the text above leaves it, keeping the picture's shape;
-              it's positioned out of flow so its full size never stretches the screen-tall hero */}
-          <div className="relative mt-6 min-h-48 w-full flex-1 sm:mt-8">
-            <div className="absolute top-0 left-1/2 flex aspect-[2976/1663] h-full max-w-full -translate-x-1/2 items-center sm:max-w-[min(74%,1024px)] lg:max-w-[min(70%,1024px)]">
-              <SpotlightDemo eager />
-            </div>
-          </div>
-        </section>
-        <CapsLockFeature />
+        <FeatureGrid />
+        <CapsLockShowcase />
         <DownloadSection />
         <FaqSection />
       </main>
       <SiteFooter />
     </div>
-  );
-}
-
-export function DownloadButton({ className = "" }: { className?: string }) {
-  return (
-    <a
-      href="#download"
-      className={`inline-flex h-12 items-center gap-2.5 rounded-full bg-[linear-gradient(180deg,#4fa2fd_0%,#0971e6_100%)] px-6 text-[16px] text-white shadow-[inset_0_0_4px_0.5px_rgba(255,255,255,0.55)] transition-[filter,transform] duration-200 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1076e8] active:scale-[0.98] sm:h-[52px] sm:gap-3 sm:px-7 sm:text-[17px] lg:h-[56px] lg:px-8 lg:text-[18px] ${className}`}
-    >
-      download for windows
-      <svg
-        width="19"
-        height="19"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <path d="m6 9 6 6 6-6" />
-      </svg>
-    </a>
   );
 }

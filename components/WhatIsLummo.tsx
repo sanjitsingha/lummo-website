@@ -1,97 +1,105 @@
-import Image from "next/image";
-import type { ReactNode } from "react";
-import { CapsLockGlyph } from "@/components/CapsLockFeature";
+import { APP_ICONS } from "@/components/AppIcons";
 import SystemDownload from "@/components/SystemDownload";
 import { getLatestRelease, RELEASES_URL } from "@/lib/release";
 
-/** The first screen: says what lummo is, with a download button for the visitor's system. */
+/** The first screen: lummo is a productivity app on a hotkey, with Spotlight at the centre under a beam of light. */
 export default async function WhatIsLummo() {
   const release = await getLatestRelease();
 
   return (
-    // together with the header (64 / 76 / 88px tall) this fills exactly one screen
     <section
-      aria-labelledby="what-is-lummo-title"
-      className="flex h-[calc(100dvh-64px)] min-h-fit flex-col items-center justify-center px-6 py-16 text-center sm:h-[calc(100dvh-76px)] sm:px-10 lg:h-[calc(100dvh-88px)]"
+      aria-labelledby="hero-title"
+      style={{ paddingTop: "clamp(112px, 17dvh, 168px)" }}
+      className="relative isolate flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-5 pb-[clamp(24px,5dvh,64px)] text-center sm:px-10"
     >
-      <Image
-        src="/lummo/logo.png"
-        alt="lummo"
-        width={616}
-        height={616}
-        sizes="(min-width: 1024px) 112px, (min-width: 640px) 96px, 80px"
-        loading="eager"
-        draggable={false}
-        className="size-20 select-none sm:size-24 lg:size-28"
-      />
-      <h2
-        id="what-is-lummo-title"
-        className="mt-8 max-w-[18ch] text-balance text-[clamp(1.625rem,2.6vw,2.75rem)] font-normal leading-[1.25] tracking-[-0.03em] text-[#434343] md:max-w-none lg:mt-12"
-      >
-        Hey{" "}
-        <span className="whitespace-nowrap">
-          Apple
-          <AppleEmoji src="/lummo/emoji/waving-hand.png" emoji="👋" />,
-        </span>{" "}
-        thanks for the inspiration.
-        <br className="hidden sm:inline" /> We took it a little{" "}
-        <span className="whitespace-nowrap">
-          further.
-          {/* an orange where you'd expect an apple */}
-          <AppleEmoji src="/lummo/emoji/tangerine.png" emoji="🍊" />
-        </span>
-      </h2>
-      {/* the tall lines leave room for the search pill and for the Caps Lock badge that hangs below its line */}
-      <p className="mt-6 max-w-[50em] text-pretty text-[clamp(0.875rem,0.95vw,1.0625rem)] leading-[2.1] tracking-[-0.01em] text-[#6e6e6e] sm:mt-8">
-        A little upgrade to your everyday desktop. Bringing the convenience of a smart <SearchPill>Spotlight Search</SearchPill>{" "}
-        and a sleek{" "}
-        <span className="whitespace-nowrap">
-          <strong className="font-semibold text-[#3a3a3c]">Caps Lock indicator</strong>
-          <CapsLockCaret />
-        </span>{" "}
-        to Windows and Linux, with a few thoughtful improvements of our own. Built with passion,
-        designed for productivity, and completely free for everyone.
+      <div aria-hidden className="hero-beam" />
+      <h1 id="hero-title" className="sr-only">
+        Everything you need, one hotkey away.
+      </h1>
+      <SpotlightPanel />
+      <p className="relative -mt-[clamp(20px,5vw,72px)] max-w-[44rem] text-pretty text-[clamp(1rem,1.25vw,1.1875rem)] leading-[1.5] tracking-[-0.012em] text-ink-2">
+        lummo puts search, clipboard history, conversions and quick math on a single shortcut.
       </p>
-      <div className="mt-14 flex w-full justify-center sm:mt-16">
+      <div className="mt-[clamp(14px,2.4dvh,24px)] flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
         <SystemDownload linux={release?.deb ?? RELEASES_URL} placement="hero" />
       </div>
     </section>
   );
 }
 
-/** An emoji drawn as Apple draws it, so Windows and Linux visitors see the iOS look rather than their system's. */
-function AppleEmoji({ src, emoji }: { src: string; emoji: string }) {
-  return (
-    <Image
-      src={src}
-      alt={emoji}
-      width={64}
-      height={64}
-      loading="eager"
-      draggable={false}
-      className="ml-[0.25em] inline-block size-[1.1em] select-none align-[-0.2em]"
-    />
-  );
-}
+const APPS = [
+  { name: "Visual Studio Code", icon: APP_ICONS.vscode },
+  { name: "Google Chrome", icon: APP_ICONS.chrome },
+  { name: "Spotify", icon: APP_ICONS.spotify },
+  { name: "Terminal", icon: APP_ICONS.terminal },
+  { name: "Calculator", icon: APP_ICONS.calculator },
+  { name: "Files", icon: APP_ICONS.files },
+];
 
-/** A word set in a tiny search bar, like the one Spotlight pops up. */
-function SearchPill({ children }: { children: ReactNode }) {
-  return (
-    <span className="inline-block rounded-full border border-black/[0.12] bg-[linear-gradient(180deg,#ffffff_0%,#f4f4f6_100%)] px-[0.75em] leading-[1.6] text-[#434343] shadow-[inset_0_1px_0_#fff,0_1px_3px_rgba(0,0,0,0.12)]">
-      {children}
-    </span>
-  );
-}
+/** The panel melts into the page: the ellipse keeps the top and upper sides solid, and its curve fades the bottom corners first. */
+const BOTTOM_FADE =
+  "radial-gradient(ellipse 96% 90% at 50% 0%, #000 72%, rgb(0 0 0 / 0.72) 80%, rgb(0 0 0 / 0.3) 90%, transparent 100%)";
 
-/** A blinking text cursor with the Caps Lock badge popped up under it, as lummo shows it while you type. */
-function CapsLockCaret() {
+const TOP_SHINE =
+  "linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 0.12) 18%, rgb(255 255 255 / 0.8) 50%, rgb(255 255 255 / 0.12) 82%, transparent 100%)";
+
+const TOP_GLOW = "radial-gradient(ellipse 50% 50% at 50% 50%, rgb(255 255 255 / 0.16) 0%, rgb(255 255 255 / 0.05) 55%, transparent 100%)";
+
+/**
+ * Spotlight as it opens, with the first application selected, melting into the page at the bottom.
+ * A picture of the app, so it takes no input. Everything is sized to the panel's width (`cqw`), and
+ * on short screens the panel gets smaller so the download button stays in view.
+ */
+function SpotlightPanel() {
   return (
-    <span aria-hidden className="relative ml-[0.2em] inline-block h-[1.15em] w-[1.5px] align-[-0.22em]">
-      <span className="absolute inset-0 rounded-full bg-[#b5b5ba] motion-safe:animate-[spotlight-blink_1.06s_infinite]" />
-      {/* it hangs over the next line like the real one does over your text, so a white ring keeps it apart */}
-      <span className="absolute top-[calc(100%+0.25em)] left-[-0.2em] flex size-[1.6em] items-center justify-center rounded-[0.4em] border border-white/[0.14] bg-[rgba(40,40,44,0.96)] shadow-[0_0_0_2px_#fff,0_4px_12px_rgba(0,0,0,0.22)]">
-        <CapsLockGlyph on size="100%" />
-      </span>
-    </span>
+    <div
+      aria-hidden
+      style={{ maxWidth: "min(960px, max(340px, calc((100dvh - 345px) * 2.25)))" }}
+      className="@container w-full relative text-left select-none"
+    >
+      {/* a thin line of light along the top edge: brightest in the middle, gone at both ends */}
+      <span style={{ position: "absolute", insetInline: 0, top: 0, zIndex: 1, height: 1, background: TOP_SHINE }} />
+      {/* its glow: a tight bloom on the line, and a soft halo spilling above and into the panel */}
+      <span style={{ position: "absolute", insetInline: "18%", top: -1, zIndex: 1, height: 3, background: TOP_SHINE, filter: "blur(3px)" }} />
+      <span
+        style={{
+          position: "absolute",
+          insetInline: "12%",
+          top: "calc(clamp(70px, 13cqw, 130px) / -2)",
+          zIndex: 1,
+          height: "clamp(70px, 13cqw, 130px)",
+          background: TOP_GLOW,
+          pointerEvents: "none",
+        }}
+      />
+      <div style={{ WebkitMaskImage: BOTTOM_FADE, maskImage: BOTTOM_FADE }} className="overflow-hidden rounded-[clamp(12px,1.6cqw,16px)] border border-white/[0.14] bg-[radial-gradient(120%_130%_at_42%_0%,#313134_0%,#222225_52%,#1b1b1e_100%)]">
+        <div className="flex h-[clamp(56px,8.4cqw,80px)] items-center gap-[clamp(14px,1.9cqw,18px)] px-[clamp(20px,2.6cqw,26px)]">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-[clamp(21px,2.9cqw,28px)] shrink-0 text-[#a1a1a6]">
+            <path d="m21 21-4.34-4.34" />
+            <circle cx="11" cy="11" r="8" />
+          </svg>
+          <span className="truncate text-[clamp(18px,2.7cqw,26px)] tracking-[-0.01em] text-[#85858b]">Search anything...</span>
+        </div>
+        <div className="mx-[clamp(8px,1.1cqw,10px)] border-t border-white/[0.09] pb-2">
+          <p className="px-[clamp(12px,1.5cqw,14px)] pt-[clamp(10px,1.4cqw,14px)] pb-[clamp(4px,0.7cqw,7px)] text-[clamp(11px,1.4cqw,14px)] tracking-[0.01em] text-[#8e8e93]">
+            Applications
+          </p>
+          {APPS.map(({ name, icon }, index) => (
+            <div
+              key={name}
+              className={`flex h-[clamp(46px,6.9cqw,66px)] items-center gap-[clamp(12px,1.7cqw,16px)] rounded-[clamp(6px,0.9cqw,9px)] px-[clamp(10px,1.5cqw,14px)] ${index === 0 ? "bg-white/[0.1]" : ""}`}
+            >
+              <span className="flex size-[clamp(26px,3.75cqw,36px)] shrink-0 items-center justify-center [&>svg]:size-full">{icon}</span>
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-[clamp(14px,2cqw,19px)] leading-[1.25] text-[#f5f5f7]">{name}</span>
+                <span className={`block text-[clamp(11px,1.45cqw,14px)] leading-[1.3] ${index === 0 ? "text-[#c7c7cc]" : "text-[#8e8e93]"}`}>
+                  Application
+                </span>
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
