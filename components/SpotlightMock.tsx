@@ -17,7 +17,7 @@ const CORNER_RING: CSSProperties = {
   padding: 1,
   borderRadius: RADIUS,
   background:
-    "radial-gradient(max(240px, 34cqw) max(150px, 20cqw) at 0 0, rgb(255 255 255 / 0.85) 0%, rgb(255 255 255 / 0.3) 42%, transparent 100%)",
+    "radial-gradient(max(240px, 34cqw) max(150px, 20cqw) at 0 0, rgb(var(--glow) / 0.85) 0%, rgb(var(--glow) / 0.3) 42%, transparent 100%)",
   WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
   WebkitMaskComposite: "xor",
   mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
@@ -25,64 +25,75 @@ const CORNER_RING: CSSProperties = {
   pointerEvents: "none",
 };
 
-/** The panel rests slightly smaller and grows out of its shining top-left corner on hover. */
-const PANEL_MOTION = `
-@media (hover: hover) {
-  .mock-panel {
-    transform: scale(0.97);
-    transform-origin: 0 0;
-    transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .group:hover .mock-panel { transform: scale(1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .mock-panel { transition: none; }
-}
-`;
+/** Film grain: tiled SVG noise laid over the card's gradient, under the panel. */
+const GRAIN = `url("data:image/svg+xml,${encodeURIComponent(
+  "<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(#n)'/></svg>",
+)}")`;
+
+/** Slate card background: a soft light high up on the left, melting to near-black at the bottom. */
+const GLOW = "255 255 255";
+const CARD_BG =
+  "radial-gradient(85% 55% at 28% 18%, rgb(150 165 190 / 0.22) 0%, rgb(120 135 160 / 0.08) 50%, transparent 78%), radial-gradient(70% 40% at 50% 105%, rgb(90 105 130 / 0.16) 0%, transparent 70%), linear-gradient(180deg, #232830 0%, #15181d 55%, #0c0d10 100%)";
+
+/** A deep color glowing from the top of the card, over a dark base. */
+const tinted = (glow: string, soft: string, top: string) =>
+  `radial-gradient(85% 60% at 45% 8%, rgb(${glow} / 0.5) 0%, rgb(${glow} / 0.16) 52%, transparent 80%), radial-gradient(60% 60% at 0% 55%, rgb(${soft} / 0.2) 0%, transparent 75%), linear-gradient(180deg, ${top} 0%, #0e0e14 62%, #0a0a0e 100%)`;
+
+const TONES = {
+  slate: { background: CARD_BG, border: "rgb(255 255 255 / 0.12)" },
+  purple: { background: tinted("126 58 190", "150 60 200", "#24122f"), border: "rgb(170 110 230 / 0.24)" },
+  blue: { background: tinted("20 80 170", "30 100 200", "#0c1e3d"), border: "rgb(90 150 240 / 0.24)" },
+  teal: { background: tinted("14 116 160", "20 140 180", "#0a2838"), border: "rgb(80 180 220 / 0.24)" },
+};
+
+const BOTTOM_SHADE =
+  "radial-gradient(80% 80% at 100% 100%, #08090b 0%, rgb(8 9 11 / 0.8) 42%, transparent 100%), linear-gradient(180deg, transparent 42%, rgb(8 9 11 / 0.72) 68%, #08090b 90%)";
 
 type CardProps = {
-  wide?: boolean;
+  /** The card's background color. */
+  tone?: keyof typeof TONES;
   /** What's typed in the search field; without it the placeholder shows. */
   query?: string;
   lead: string;
   rest: string;
   /** How far the panel runs past the card's right edge. */
   panelWidth?: string;
-  height?: string;
   /** Below 1 the fade finishes sooner, for a panel with little in it. */
   fade?: number;
   children: ReactNode;
 };
 
-/** A feature card: a still Spotlight cropped by the card's right edge, with its line over the faded bottom. */
-export function SpotlightMockCard({ wide = false, query, lead, rest, panelWidth, height, fade = 1, children }: CardProps) {
-  const cardHeight = height ?? (wide ? "clamp(420px, 44vw, 540px)" : "clamp(380px, 31vw, 430px)");
+/** A feature card: a still Spotlight pushed toward the bottom right and cropped by the card, with its line over the faded bottom. */
+export function SpotlightMockCard({ tone = "slate", query, lead, rest, panelWidth, fade = 1, children }: CardProps) {
+  const cardHeight = "clamp(480px, 46vw, 640px)";
   return (
     <article
-      className={`group relative overflow-hidden rounded-[18px] border border-line ${wide ? "md:col-span-2" : ""}`}
+      className="relative w-[min(90vw,520px)] shrink-0 snap-start overflow-hidden rounded-[18px] border"
       style={
         {
           containerType: "inline-size",
+          borderColor: TONES[tone].border,
+          "--glow": GLOW,
           height: cardHeight,
-          background: "#121214",
-          "--u": wide ? "1cqw" : "1.7cqw",
+          background: TONES[tone].background,
+          "--u": "1.7cqw",
           "--h": cardHeight,
         } as CSSProperties
       }
     >
-      <style href="spotlight-mock-motion" precedence="default">
-        {PANEL_MOTION}
-      </style>
+      <span
+        aria-hidden
+        style={{ position: "absolute", inset: 0, backgroundImage: GRAIN, backgroundSize: "220px 220px", opacity: 0.22, mixBlendMode: "overlay", pointerEvents: "none" }}
+      />
       <div
         aria-hidden
-        className="mock-panel"
-        style={{ position: "absolute", left: INSET, top: size(24, 3.4, 40), width: panelWidth ?? "max(540px, 128cqw)" }}
+        style={{ position: "absolute", left: "clamp(28px, 8cqw, 72px)", top: "clamp(40px, 9cqw, 76px)", width: panelWidth ?? "max(540px, 128cqw)" }}
       >
         <div
           style={{
             overflow: "hidden",
             borderRadius: RADIUS,
-            border: "1px solid rgb(255 255 255 / 0.14)",
+            border: "1px solid rgb(var(--glow) / 0.14)",
             background: "radial-gradient(120% 130% at 22% 0%, #313134 0%, #222225 52%, #1b1b1e 100%)",
             textAlign: "left",
             userSelect: "none",
@@ -106,11 +117,8 @@ export function SpotlightMockCard({ wide = false, query, lead, rest, panelWidth,
           </div>
           <div style={{ margin: `0 ${size(8, 0.9, 10)}`, borderTop: "1px solid rgb(255 255 255 / 0.09)", paddingBottom: 8 }}>{children}</div>
         </div>
-        {/* light along the top-left corner, brightest at the corner: it fades in while the card is hovered */}
-        <span
-          className="opacity-0 transition-opacity ease-out group-hover:opacity-100"
-          style={{ position: "absolute", inset: 0, transitionDuration: "500ms", pointerEvents: "none" }}
-        >
+        {/* light along the top-left corner, brightest at the corner */}
+        <span style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
           <span style={CORNER_RING} />
           <span style={{ position: "absolute", inset: 0, filter: "blur(3px)", opacity: 0.6 }}>
             <span style={CORNER_RING} />
@@ -122,11 +130,13 @@ export function SpotlightMockCard({ wide = false, query, lead, rest, panelWidth,
               top: "calc(max(160px, 18cqw) / -2)",
               width: "max(260px, 30cqw)",
               height: "max(160px, 18cqw)",
-              background: "radial-gradient(closest-side, rgb(255 255 255 / 0.13) 0%, rgb(255 255 255 / 0.04) 55%, transparent 100%)",
+              background: "radial-gradient(closest-side, rgb(var(--glow) / 0.13) 0%, rgb(var(--glow) / 0.04) 55%, transparent 100%)",
             }}
           />
         </span>
       </div>
+      {/* the mockup sinks into black along the bottom and toward the bottom-right corner, under the card's line */}
+      <span aria-hidden style={{ position: "absolute", inset: 0, background: BOTTOM_SHADE, pointerEvents: "none" }} />
       <div style={{ position: "absolute", left: INSET, right: INSET, bottom: size(20, 2.4, 28) }}>
         <h3 className="max-w-[32rem] text-[clamp(1.0625rem,1.4vw,1.25rem)] leading-[1.32] font-medium tracking-[-0.015em] text-ink">
           {lead} <span className="font-normal text-ink-2">{rest}</span>

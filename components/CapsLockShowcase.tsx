@@ -42,10 +42,11 @@ export default function CapsLockShowcase() {
       <style href="caps-showcase-motion" precedence="default">
         {MOTION}
       </style>
-      <h2 id="caps-title" className="mb-12 text-center text-[clamp(1.25rem,1.8vw,1.625rem)] font-medium tracking-[-0.02em] text-ink lg:mb-16">
+      <Screen />
+      {/* sits on the dark bottom of the screen, where it has faded into the page */}
+      <h2 id="caps-title" className="relative -mt-[clamp(40px,4.5vw,60px)] text-center text-[clamp(1.25rem,1.8vw,1.625rem)] font-medium tracking-[-0.02em] text-ink">
         Caps Lock, <span className="text-ink-2">right where you type.</span>
       </h2>
-      <Screen />
     </section>
   );
 }
@@ -207,9 +208,9 @@ const RING: CSSProperties = {
 const NOTEPAD_SHINE: CSSProperties = {
   ...RING,
   inset: 0,
+  padding: 1.5,
   borderRadius: "10px 10px 0 0",
-  background:
-    "radial-gradient(max(240px, 38%) 170px at 100% 0, rgb(255 255 255 / 0.85) 0%, rgb(255 255 255 / 0.3) 42%, transparent 100%)",
+  background: "radial-gradient(280px 190px at 100% 0, #fff 0%, rgb(255 255 255 / 0.45) 42%, transparent 100%)",
 };
 /** The Caps Lock box: light on its top-right corner only, with no glow or shadow. */
 const BADGE_SHINE: CSSProperties = {
@@ -331,22 +332,12 @@ function Notepad({ text, badge, appearance, clearing }: { text: string; badge: B
         </span>
       </div>
       </div>
-      {/* the same corner light as the feature cards, at the window's top right */}
+      {/* the window's shine: only its border, around the top-right corner */}
       <span style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "10px 10px 0 0", pointerEvents: "none" }}>
         <span style={NOTEPAD_SHINE} />
         <span style={{ position: "absolute", inset: 0, filter: "blur(3px)", opacity: 0.6 }}>
           <span style={NOTEPAD_SHINE} />
         </span>
-        <span
-          style={{
-            position: "absolute",
-            top: -90,
-            right: -150,
-            width: 300,
-            height: 180,
-            background: "radial-gradient(closest-side, rgb(255 255 255 / 0.13) 0%, rgb(255 255 255 / 0.04) 55%, transparent 100%)",
-          }}
-        />
       </span>
     </div>
   );

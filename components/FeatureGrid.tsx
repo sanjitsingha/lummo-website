@@ -14,12 +14,18 @@ const RECENTLY_OPENED = [
 /** Everything on the hotkey, opening apps first, each shown in a still Spotlight mockup. */
 export default function FeatureGrid() {
   return (
-    <section id="features" aria-labelledby="features-title" className="mx-auto w-full max-w-[1200px] px-3 pt-24 sm:px-5 lg:pt-36">
+    <section id="features" aria-labelledby="features-title" className="w-full pt-24 lg:pt-36">
       <h2 id="features-title" className="mb-12 text-center text-[clamp(1.25rem,1.8vw,1.625rem)] font-medium tracking-[-0.02em] text-ink lg:mb-16">
         One hotkey. <span className="text-ink-2">All of this.</span>
       </h2>
-      <div className="grid gap-4 md:grid-cols-2 lg:gap-5">
-        <SpotlightMockCard wide query="Figma" lead="Open anything." rest="Super quick.">
+      <div
+        className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto px-[calc(50%-min(45vw,260px))] pb-4 [scrollbar-width:none] [scroll-padding-inline:calc(50%-min(45vw,260px))] lg:gap-5 [&::-webkit-scrollbar]:hidden"
+        style={{
+          WebkitMaskImage: "linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%)",
+          maskImage: "linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%)",
+        }}
+      >
+        <SpotlightMockCard tone="purple" query="Figma" lead="Open anything." rest="Super quick.">
           <MockHeading>Top Hit</MockHeading>
           <MockRow name="Figma" icon={APP_ICONS.figma} selected />
           <MockHeading>Recently opened</MockHeading>
@@ -27,12 +33,12 @@ export default function FeatureGrid() {
             <MockRow key={app.name} {...app} />
           ))}
         </SpotlightMockCard>
-        <SpotlightMockCard query="$1" panelWidth="112cqw" lead="Money, converted." rest="166 currencies, updated daily and ready offline.">
+        <SpotlightMockCard query="$1" panelWidth="100cqw" lead="Money, converted." rest="166 currencies, updated daily and ready offline.">
           <CurrencyAnswer />
           <MockHeading>Related</MockHeading>
           <MockRow name="Search Google for “1 USD to INR”" subtitle="Web search" icon={APP_ICONS.chrome} />
         </SpotlightMockCard>
-        <SpotlightMockCard query="5'10 in cm" panelWidth="104cqw" lead="Every unit, understood." rest="Height, weight, temperature and more, typos included.">
+        <SpotlightMockCard tone="blue" query="5'10 in cm" panelWidth="100cqw" lead="Every unit, understood." rest="Height, weight, temperature and more, typos included.">
           <MockSplit
             left={{ code: "ft", amount: "5 ft 10 in", name: "Feet", note: "Length" }}
             right={{ code: "cm", amount: "177.8 cm", name: "Centimeters", note: "1 ft = 30.48 cm" }}
@@ -40,10 +46,10 @@ export default function FeatureGrid() {
           <MockHeading>Related</MockHeading>
           <MockRow name="Search Google for “5 ft 10 in to cm”" subtitle="Web search" icon={APP_ICONS.chrome} />
         </SpotlightMockCard>
-        <SpotlightMockCard wide height="clamp(380px, 36vw, 440px)" lead="Quick files." rest="Everything you copy, ready to paste again.">
+        <SpotlightMockCard lead="Quick files." rest="Everything you copy, ready to paste again.">
           <MockQuickFiles />
         </SpotlightMockCard>
-        <SpotlightMockCard query="249*12" panelWidth="112cqw" fade={0.85} lead="Quick math." rest="Type a sum and the answer is already there.">
+        <SpotlightMockCard tone="teal" query="249*12" panelWidth="100cqw" fade={0.85} lead="Quick math." rest="Type a sum and the answer is already there.">
           <MockHeading>Calculator</MockHeading>
           <MockCalc expression="249 × 12" answer="2988" />
           <MockHeading>Web</MockHeading>

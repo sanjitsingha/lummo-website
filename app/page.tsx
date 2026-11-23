@@ -1,7 +1,8 @@
 import CapsLockShowcase from "@/components/CapsLockShowcase";
-import DownloadSection from "@/components/DownloadSection";
 import FaqSection from "@/components/FaqSection";
 import FeatureGrid from "@/components/FeatureGrid";
+import KeyboardSection from "@/components/KeyboardSection";
+import ShortcutsSection from "@/components/ShortcutsSection";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import WhatIsLummo from "@/components/WhatIsLummo";
@@ -13,8 +14,9 @@ export default function Home() {
       <main className="flex flex-col">
         <WhatIsLummo />
         <FeatureGrid />
+        <ShortcutsSection />
         <CapsLockShowcase />
-        <DownloadSection />
+        <KeyboardSection />
         <FaqSection />
       </main>
       <SiteFooter />

@@ -5,6 +5,8 @@ const LINKS = [
   // from the root, so they work on the download page too
   { label: "Download", href: "/#download" },
   { label: "FAQ", href: "/#faq" },
+  { label: "Changelog", href: "/changelog" },
+  { label: "Privacy", href: "/privacy-policy" },
   { label: "GitHub", href: REPO_URL, external: true },
 ];
 
@@ -18,7 +20,7 @@ export default function SiteFooter() {
             <Image src="/lummo/logo.png" alt="" width={616} height={616} sizes="24px" draggable={false} className="size-6 select-none" />
             <span>© 2026 lummo</span>
           </div>
-          <nav aria-label="Footer" className="flex items-center gap-6 text-sm sm:gap-8">
+          <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm sm:gap-x-8">
             {LINKS.map(({ label, href, external }) => (
               <a
                 key={label}
