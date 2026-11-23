@@ -22,7 +22,7 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="relative isolate flex min-h-[100dvh] flex-col bg-black text-white">
       {/* the hero's blinds, across the top of the page and fading into the black */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[clamp(360px,60dvh,600px)]">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[clamp(360px,60svh,600px)]">
         <BlindsBackground />
       </div>
       <SiteHeader />

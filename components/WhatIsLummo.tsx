@@ -10,20 +10,22 @@ export default async function WhatIsLummo() {
   return (
     <section
       aria-labelledby="hero-title"
-      style={{ paddingTop: "clamp(112px, 17dvh, 168px)" }}
-      className="relative isolate flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-5 pb-[clamp(24px,5dvh,64px)] text-center sm:px-10"
+      style={{ paddingTop: "clamp(88px, 12svh, 128px)" }}
+      className="relative isolate flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 pb-[clamp(24px,5svh,64px)] text-center sm:px-10"
     >
       {/* the light stays put at the top centre, and the bottom fades out into the page */}
       <BlindsBackground />
       <div aria-hidden className="hero-beam" />
+      {/* pure black from below the mockup down, so no color sits behind the description and button */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 -z-[1] h-[58%] bg-[linear-gradient(180deg,transparent_0%,#000_48%,#000_100%)]" />
       <h1 id="hero-title" className="sr-only">
         Everything you need, one hotkey away.
       </h1>
       <SpotlightPanel />
-      <p className="relative -mt-[clamp(20px,5vw,72px)] max-w-[44rem] text-pretty text-[clamp(1rem,1.25vw,1.1875rem)] leading-[1.5] tracking-[-0.012em] text-ink-2">
+      <p className="relative z-20 mt-[clamp(16px,2.4svh,28px)] max-w-[44rem] text-pretty text-[clamp(1rem,1.25vw,1.1875rem)] leading-[1.5] tracking-[-0.012em] text-ink-2">
         lummo puts search, clipboard history, conversions and quick math on a single shortcut.
       </p>
-      <div className="mt-[clamp(14px,2.4dvh,24px)] flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
+      <div className="relative z-20 mt-[clamp(20px,3.2svh,32px)] flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
         <SystemDownload linux={release?.deb ?? RELEASES_URL} placement="hero" />
       </div>
     </section>
@@ -55,19 +57,24 @@ const TOP_GLOW = "radial-gradient(ellipse 50% 50% at 50% 50%, rgb(255 255 255 / 
  */
 function SpotlightPanel() {
   return (
+    // on phones it keeps a full-size 620px width: it starts at the left, runs off the right edge and fades there
     <div
       aria-hidden
-      style={{ maxWidth: "min(960px, max(340px, calc((100dvh - 345px) * 2.25)))" }}
-      className="@container w-full relative text-left select-none"
+      className="relative z-10 w-full max-w-[min(960px,max(340px,calc((100svh_-_400px)_*_2.25)))] select-none max-sm:-mt-[50px] max-sm:w-[620px] max-sm:max-w-none max-sm:self-start"
     >
-      {/* a thin line of light along the top edge: brightest in the middle, gone at both ends */}
-      <span style={{ position: "absolute", insetInline: 0, top: 0, zIndex: 1, height: 1, background: TOP_SHINE }} />
+    {/* black behind the panel, so where it fades it melts into black and the blinds never show through it */}
+    <span className="absolute inset-x-0 top-0 bottom-0 rounded-[16px] bg-black [mask-image:linear-gradient(180deg,#000_0%,#000_62%,transparent_100%)] max-sm:top-[50px] max-sm:rounded-[12px]" />
+    {/* the top padding keeps the light above the panel inside the phone's fade */}
+    <div className="relative max-sm:pt-[50px] max-sm:[mask-image:linear-gradient(90deg,#000_calc(100vw_-_190px),transparent_calc(100vw_-_28px))]">
+    <div className="@container relative w-full text-left">
+      {/* a thin line of light along the top edge: brightest in the middle, gone at both ends. On phones it spans only the part on screen */}
+      <span className="inset-x-0 max-sm:right-auto max-sm:w-[calc(100vw-40px)]" style={{ position: "absolute", top: 0, zIndex: 1, height: 1, background: TOP_SHINE }} />
       {/* its glow: a tight bloom on the line, and a soft halo spilling above and into the panel */}
-      <span style={{ position: "absolute", insetInline: "18%", top: -1, zIndex: 1, height: 3, background: TOP_SHINE, filter: "blur(3px)" }} />
+      <span className="inset-x-[18%] max-sm:right-auto max-sm:left-[calc((100vw-40px)*0.18)] max-sm:w-[calc((100vw-40px)*0.64)]" style={{ position: "absolute", top: -1, zIndex: 1, height: 3, background: TOP_SHINE, filter: "blur(3px)" }} />
       <span
+        className="inset-x-[12%] max-sm:right-auto max-sm:left-[calc((100vw-40px)*0.12)] max-sm:w-[calc((100vw-40px)*0.76)]"
         style={{
           position: "absolute",
-          insetInline: "12%",
           top: "calc(clamp(70px, 13cqw, 130px) / -2)",
           zIndex: 1,
           height: "clamp(70px, 13cqw, 130px)",
@@ -103,6 +110,8 @@ function SpotlightPanel() {
           ))}
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

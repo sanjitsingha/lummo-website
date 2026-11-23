@@ -110,7 +110,10 @@ void main() {
   vec3 base = gradientColor(t);
 
   vec2 offset = uMouse / uResolution;
-  float d = length(uv0 - offset);
+  // on tall screens the light stays rounder, so it doesn't wash down the whole page
+  vec2 toSpot = uv0 - offset;
+  toSpot.y /= sqrt(min(uResolution.x / uResolution.y, 1.0));
+  float d = length(toSpot);
   float r = max(uSpotlightRadius, 1e-4);
   float spot = (1.0 - 2.0 * pow(d / r, uSpotlightSoftness)) * uSpotlightOpacity;
 
@@ -190,7 +193,8 @@ void main() {
     col = min(col, vec3(0.8)) + 0.2 * (1.0 - exp(-over / 0.2));
     float luma = dot(clamp(col, 0.0, 1.0), vec3(0.2126, 0.7152, 0.0722));
     float grain = 0.5 * (hash(frag + uGrainTime) + hash(frag.yx + uGrainTime * 1.7)) - 0.5;
-    col += grain * uNoise * (0.45 + 0.55 * smoothstep(0.0, 0.5, luma));
+    // no grain on black, which would light up OLED pixels as a gray haze
+    col += grain * uNoise * smoothstep(0.006, 0.09, luma) * (0.45 + 0.55 * smoothstep(0.0, 0.5, luma));
   }
 
   float presence = smoothstep(0.0, 0.65, uIntro);
@@ -342,6 +346,8 @@ const GradientBlinds = ({
     const vao = gl.createVertexArray();
 
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    // phones and tablets: fewer pixels and a still grain, so the page doesn't drain the battery
+    const touch = window.matchMedia?.('(pointer: coarse)').matches ?? false;
     const view = { width: 1, height: 1, ratio: 1, count: 1 };
     const pointer = { x: 0, y: 0, inside: false };
     const light = { x: 0, y: 0, vx: 0, vy: 0, tx: 0, ty: 0, ready: false };
@@ -456,7 +462,7 @@ const GradientBlinds = ({
       const s = settingsRef.current;
       view.width = Math.max(1, container.clientWidth);
       view.height = Math.max(1, container.clientHeight);
-      view.ratio = Math.min(s.dpr || window.devicePixelRatio || 1, 2);
+      view.ratio = Math.min(s.dpr || window.devicePixelRatio || 1, touch ? 1.5 : 2);
       canvas.width = Math.max(1, Math.round(view.width * view.ratio));
       canvas.height = Math.max(1, Math.round(view.height * view.ratio));
       if (!light.ready) {
@@ -481,7 +487,7 @@ const GradientBlinds = ({
         swayTime += dt * s.speed;
         shift = (shift + dt * s.gradientSpeed * 0.06) % 2;
       }
-      grainTime = Math.floor(time * 24) * 17.13;
+      if (!touch) grainTime = Math.floor(time * 24) * 17.13;
       if (introClock < 1) introClock = Math.min(1, introClock + dt / INTRO_SECONDS);
       hover += ((pointer.inside ? 1 : 0) - hover) * (1 - Math.exp(-dt / 0.35));
       aim(s);
@@ -500,7 +506,7 @@ const GradientBlinds = ({
         introClock < 1 ||
         waves.some((value, index) => index % 4 === 3 && value > 0) ||
         (!reduce &&
-          (s.noise > 0 ||
+          ((s.noise > 0 && !touch) ||
             s.gradientSpeed !== 0 ||
             (s.sway > 0 && s.speed > 0) ||
             (s.idle === 'drift' && !pointer.inside)));

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0b;
+  --background: #000000;
   --foreground: #f5f5f7;
   color-scheme: dark;
 }
@@ -41,8 +41,7 @@ body {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(46% 34% at 50% 50%, rgb(79 162 253 / 0.17) 0%, transparent 72%),
-    conic-gradient(from 154deg at 50% -12%, transparent 0deg, rgb(190 220 255 / 0.15) 26deg, transparent 52deg, transparent 360deg);
+    conic-gradient(from 154deg at 50% -12%, transparent 0deg, rgb(139 92 246 / 0.12) 26deg, transparent 52deg, transparent 360deg);
   filter: blur(14px);
   mask-image: linear-gradient(180deg, #000 0%, #000 58%, transparent 92%);
 }
