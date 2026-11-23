@@ -8,7 +8,6 @@ const KEYBOARD_FIRST: Feature = { lead: "Keyboard-first.", rest: "Keep both hand
 const YOURS: Feature = { lead: "Yours.", rest: "Aliases and hotkeys you pick.", icon: <><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></> };
 const PRIVATE: Feature = { lead: "Private.", rest: "Your clipboard stays on your device.", icon: <><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></> };
 const FREE: Feature = { lead: "Free.", rest: "All of it, at no cost.", icon: <><path d="M12 7v14" /><path d="M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8" /><path d="M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5" /><rect x="3" y="7" width="18" height="4" rx="1" /></> };
-const FEATURES = [KEYBOARD_FIRST, YOURS, PRIVATE, FREE];
 
 /** A 1px ring on a key's rounded edge, lit only around its top-left corner. */
 const KEY_RING: CSSProperties = {
@@ -73,9 +72,10 @@ export default async function KeyboardSection() {
     <section
       id="download"
       aria-labelledby="keyboard-title"
-      className="mx-auto grid w-full max-w-[1600px] items-center gap-12 px-5 pt-36 pb-36 sm:px-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-6 lg:px-16 lg:pt-56 lg:pb-60"
+      className="mx-auto grid w-full max-w-[1600px] items-center gap-4 px-5 pt-36 pb-36 sm:px-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-6 lg:px-16 lg:pt-56 lg:pb-60"
     >
-      <div>
+      {/* under 1024px the text sits below the keyboard, on its faded bottom */}
+      <div className="relative z-10 max-lg:order-2 max-lg:-mt-8">
         <h2 id="keyboard-title" className="text-[clamp(1.0625rem,1.35vw,1.3125rem)] leading-[1.3] font-medium tracking-[-0.02em] text-ink">
           It’s not about saving time.
           <br />
@@ -86,34 +86,30 @@ export default async function KeyboardSection() {
         </div>
       </div>
 
-      {/* small screens get the reasons as a plain grid, since a keyboard wouldn't fit */}
-      <div className="grid gap-3 sm:grid-cols-2 lg:hidden">
-        {FEATURES.map((feature) => (
-          <FeatureKey key={feature.lead} feature={feature} className="min-h-[116px]" />
-        ))}
-      </div>
-
       <Keyboard />
     </section>
   );
 }
 
+/** Under 1024px it's the same keyboard, sized so all four lit keys fit and running off the screen's right edge. */
 function Keyboard() {
   return (
     <div
-      className="hidden overflow-hidden lg:block"
+      className="overflow-hidden max-lg:order-1 max-lg:-mx-5 max-lg:h-[calc(var(--kh)*4.7)]! max-lg:[--k:min(calc((100vw_-_84px)_/_4.9),100px)]! max-lg:[--kb-fade:linear-gradient(90deg,#000_calc(100%_-_22px),transparent_100%),linear-gradient(180deg,transparent_0%,transparent_8%,rgb(0_0_0/0.22)_22%,#000_38%,#000_82%,rgb(0_0_0/0.6)_88%,rgb(0_0_0/0.25)_94%,transparent_100%)]! max-lg:[--kh:max(var(--k),76px)]! sm:max-lg:-mx-10"
       style={
         {
           "--k": "clamp(72px, 6vw, 92px)",
+          "--kh": "var(--k)",
+          "--kb-fade": KEYBOARD_FADE,
           height: "calc(var(--k) * 3.45)",
-          WebkitMaskImage: KEYBOARD_FADE,
+          WebkitMaskImage: "var(--kb-fade)",
           WebkitMaskComposite: "source-in",
-          maskImage: KEYBOARD_FADE,
+          maskImage: "var(--kb-fade)",
           maskComposite: "intersect",
         } as CSSProperties
       }
     >
-      <div style={{ zoom: 0.8 }} className="ml-[16%] mt-[calc(var(--k)*0.3)] flex w-max flex-col gap-2.5">
+      <div style={{ zoom: 0.8 }} className="mt-[calc(var(--k)*0.3)] ml-[16%] flex w-max flex-col gap-2.5 max-lg:ml-5 max-lg:[zoom:1]! sm:max-lg:ml-10">
         <Row caps={FUNCTION_ROW} short />
         <Row caps={NUMBER_ROW} />
         <div className="flex gap-2.5">
@@ -139,7 +135,7 @@ function Keyboard() {
 
 const keySize = (width: number, height = 1): CSSProperties => ({
   width: `calc(var(--k) * ${width})`,
-  height: `calc(var(--k) * ${height})`,
+  height: `calc(var(--kh) * ${height})`,
 });
 
 function Row({ caps, short = false }: { caps: Cap[]; short?: boolean }) {
@@ -176,16 +172,16 @@ function KeyCap({ cap, short = false }: { cap: Cap; short?: boolean }) {
 }
 
 /** One of the reasons, sitting in the keyboard as a lit key. */
-function FeatureKey({ feature, style, className = "" }: { feature: Feature; style?: CSSProperties; className?: string }) {
+function FeatureKey({ feature, style }: { feature: Feature; style?: CSSProperties }) {
   return (
     <div
       style={style}
-      className={`relative flex shrink-0 flex-col justify-between rounded-[8px] border border-white/[0.16] bg-[linear-gradient(160deg,#242428_0%,#151518_100%)] p-2.5 shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] ${className}`}
+      className="relative flex shrink-0 flex-col justify-between rounded-[8px] border border-white/[0.16] bg-[linear-gradient(160deg,#242428_0%,#151518_100%)] p-2.5 shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] max-sm:p-[7px]"
     >
-      <svg aria-hidden viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="size-[18px] text-ink-2">
+      <svg aria-hidden viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="size-[18px] text-ink-2 max-sm:size-3.5">
         {feature.icon}
       </svg>
-      <p className="text-[11.5px] leading-[1.3] text-ink-2">
+      <p className="text-[11.5px] leading-[1.3] text-ink-2 max-sm:text-[10px] max-sm:leading-[1.2]">
         <span className="font-semibold text-ink">{feature.lead}</span> {feature.rest}
       </p>
       <CornerShine />

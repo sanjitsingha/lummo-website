@@ -21,6 +21,10 @@ export interface GradientBlindsProps {
   perspective?: number;
   gradientSpeed?: number;
   shine?: number;
+  /** Replaces `shine` on screens under 640px. */
+  phoneShine?: number;
+  /** How wide the bright line on each blind is; below 1 is thinner. */
+  shineWidth?: number;
   relief?: number;
   glow?: number;
   sway?: number;

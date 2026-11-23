@@ -34,6 +34,7 @@ uniform vec3 uColors[8];
 uniform int uColorCount;
 uniform float uLightMode;
 uniform float uShine;
+uniform float uShineWidth;
 uniform float uRelief;
 uniform float uGlow;
 uniform float uSway;
@@ -162,7 +163,7 @@ void main() {
   ramp = pow(clamp(ramp, 0.0, 1.0), exp(tilt * 0.9));
   ramp *= 1.0 - 0.3 * min(pulse, 1.0) * calm;
   float crease = uRelief * 0.38 * smoothstep(0.62, 1.0, ramp);
-  float sheen = uShine * exp(-pow((edge - 0.035) / 0.07, 2.0)) * (0.3 + 0.7 * nearLight) * (1.0 - edgeBlend);
+  float sheen = uShine * exp(-pow((edge - 0.035 * uShineWidth) / (0.07 * uShineWidth), 2.0)) * (0.3 + 0.7 * nearLight) * (1.0 - edgeBlend);
 
   vec3 lit = spot > 0.0 ? uLightColor * spot : vec3(spot);
   lit += uLightColor * min(pulse, 1.0) * 0.35 * calm;
@@ -280,6 +281,8 @@ const GradientBlinds = ({
   perspective = 0,
   gradientSpeed = 0,
   shine = 0.4,
+  shineWidth = 1,
+  phoneShine,
   relief = 0.5,
   glow = 0.4,
   sway = 0.35,
@@ -315,6 +318,8 @@ const GradientBlinds = ({
     perspective: clamp(perspective, -1, 1),
     gradientSpeed,
     shine: clamp(shine, 0, 2),
+    shineWidth: clamp(shineWidth, 0.1, 2),
+    phoneShine,
     relief: clamp(relief, 0, 1),
     glow: clamp(glow, 0, 2),
     sway: clamp(sway, 0, 1),
@@ -397,7 +402,8 @@ const GradientBlinds = ({
       gl.uniform3fv(u.uColors, colorStops.flat);
       gl.uniform1i(u.uColorCount, colorStops.count);
       gl.uniform1f(u.uLightMode, s.lightMode ? 1 : 0);
-      gl.uniform1f(u.uShine, s.shine);
+      gl.uniform1f(u.uShine, s.phoneShine != null && window.innerWidth < 640 ? clamp(s.phoneShine, 0, 2) : s.shine);
+      gl.uniform1f(u.uShineWidth, s.shineWidth);
       gl.uniform1f(u.uRelief, s.relief);
       gl.uniform1f(u.uGlow, s.glow);
       gl.uniform1f(u.uSway, reduce ? 0 : s.sway);

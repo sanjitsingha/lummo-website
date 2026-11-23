@@ -24,6 +24,12 @@ const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E\")";
 
 const FRAME_FADE = "linear-gradient(180deg, #000 0%, #000 68%, rgb(0 0 0 / 0.58) 82%, rgb(0 0 0 / 0.16) 93%, transparent 100%)";
+/** Pure black in small steps along the bottom. The right side has no fade: the screen's edge simply crops the window. */
+const PHONE_SHADE =
+  "linear-gradient(180deg, transparent 68%, rgb(0 0 0 / 0.1) 73%, rgb(0 0 0 / 0.28) 78%, rgb(0 0 0 / 0.5) 83%, rgb(0 0 0 / 0.72) 88%, rgb(0 0 0 / 0.88) 93%, #000 97%)";
+/** Phones: the wallpaper is already pure black where the window starts to fade, so no color shows in the half-faded part. */
+const WALLPAPER_SHADE =
+  "linear-gradient(180deg, transparent 16%, rgb(0 0 0 / 0.2) 24%, rgb(0 0 0 / 0.5) 34%, rgb(0 0 0 / 0.8) 44%, rgb(0 0 0 / 0.95) 52%, #000 60%)";
 const TOP_SHINE =
   "linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 0.08) 16%, rgb(255 255 255 / 0.5) 50%, rgb(255 255 255 / 0.08) 84%, transparent 100%)";
 
@@ -51,6 +57,7 @@ export default function CapsLockShowcase() {
   );
 }
 
+/** The laptop screen. On phones it keeps a full 760px, cropped by the right edge and fading at the bottom. */
 function Screen() {
   const root = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
@@ -63,7 +70,7 @@ function Screen() {
   useEffect(() => {
     const node = root.current;
     if (!node) return;
-    const observer = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting), { threshold: 0.35 });
+    const observer = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting), { threshold: window.innerWidth < 640 ? 0.15 : 0.35 });
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
@@ -134,9 +141,11 @@ function Screen() {
       ref={root}
       role="img"
       aria-label="A Notepad window where a small Caps Lock badge appears at the text cursor while capital letters are typed"
+      className="max-sm:h-[500px]! max-sm:w-[760px]"
       style={{ position: "relative", height: "clamp(400px, 44vw, 560px)", userSelect: "none" }}
     >
       <div
+        className="max-sm:[-webkit-mask-image:none]! max-sm:[background:#000]! max-sm:[mask-image:none]!"
         style={{
           position: "absolute",
           inset: 0,
@@ -163,7 +172,9 @@ function Screen() {
           <Notepad text={text} badge={badge} appearance={appearance} clearing={clearing} />
         </div>
       </div>
-      <span style={{ position: "absolute", insetInline: 0, top: 0, height: 1, background: TOP_SHINE }} />
+      <span className="inset-x-0 max-sm:right-auto max-sm:w-[calc(100vw-24px)]" style={{ position: "absolute", top: 0, height: 1, background: TOP_SHINE }} />
+      {/* phones: solid black laid over the bottom, so the crop has no see-through or noisy fade */}
+      <span aria-hidden className="pointer-events-none absolute -inset-px hidden max-sm:block" style={{ background: PHONE_SHADE }} />
     </div>
   );
 }
@@ -175,11 +186,12 @@ function Wallpaper() {
         src="/lummo/caps-wallpaper.jpg"
         alt=""
         fill
-        sizes="(min-width: 1240px) 1184px, 100vw"
+        sizes="(min-width: 1240px) 1184px, (min-width: 640px) 100vw, 760px"
         draggable={false}
         style={{ objectFit: "cover", objectPosition: "50% 42%" }}
       />
       <div
+        className="max-sm:hidden"
         style={{
           position: "absolute",
           inset: 0,
@@ -190,6 +202,7 @@ function Wallpaper() {
           pointerEvents: "none",
         }}
       />
+      <span aria-hidden className="pointer-events-none absolute inset-0 hidden max-sm:block" style={{ background: WALLPAPER_SHADE }} />
     </>
   );
 }
@@ -210,7 +223,7 @@ const NOTEPAD_SHINE: CSSProperties = {
   inset: 0,
   padding: 1.5,
   borderRadius: "10px 10px 0 0",
-  background: "radial-gradient(280px 190px at 100% 0, #fff 0%, rgb(255 255 255 / 0.45) 42%, transparent 100%)",
+  background: "radial-gradient(280px 190px at var(--shine-x, 100%) 0, #fff 0%, rgb(255 255 255 / 0.45) 42%, transparent 100%)",
 };
 /** The Caps Lock box: light on its top-right corner only, with no glow or shadow. */
 const BADGE_SHINE: CSSProperties = {
@@ -222,14 +235,13 @@ const BADGE_SHINE: CSSProperties = {
 
 function Notepad({ text, badge, appearance, clearing }: { text: string; badge: Badge; appearance: number; clearing: boolean }) {
   return (
+    // on phones the window keeps a full 640px and runs off the right with the laptop screen, its shine on the corner in view
     <div
+      className="left-1/2 w-[min(780px,calc(100%-20px))] -translate-x-1/2 max-sm:top-[60px]! max-sm:left-8 max-sm:w-[640px] max-sm:translate-x-0 max-sm:[--shine-x:0%]"
       style={{
         position: "absolute",
         top: "clamp(28px, 6vw, 84px)",
         bottom: 0,
-        left: "50%",
-        width: "min(780px, calc(100% - 20px))",
-        transform: "translateX(-50%)",
       }}
     >
       <div
@@ -279,7 +291,9 @@ function Notepad({ text, badge, appearance, clearing }: { text: string; badge: B
         <span>View</span>
       </div>
       {/* the page */}
+      {/* on phones the text wraps early, so the cursor and its badge never reach the cropped side */}
       <div
+        className="max-sm:max-w-[calc(100vw-130px)] max-sm:text-[16px]!"
         style={{
           padding: "clamp(16px, 2vw, 24px) clamp(16px, 2.2vw, 28px)",
           whiteSpace: "pre-wrap",

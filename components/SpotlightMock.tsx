@@ -33,11 +33,11 @@ const GRAIN = `url("data:image/svg+xml,${encodeURIComponent(
 /** Slate card background: a soft light high up on the left, melting to near-black at the bottom. */
 const GLOW = "255 255 255";
 const CARD_BG =
-  "radial-gradient(85% 55% at 28% 18%, rgb(150 165 190 / 0.22) 0%, rgb(120 135 160 / 0.08) 50%, transparent 78%), radial-gradient(70% 40% at 50% 105%, rgb(90 105 130 / 0.16) 0%, transparent 70%), linear-gradient(180deg, #232830 0%, #15181d 55%, #0c0d10 100%)";
+  "radial-gradient(85% 55% at 28% 18%, rgb(150 165 190 / 0.22) 0%, rgb(120 135 160 / 0.08) 50%, transparent 78%), radial-gradient(70% 40% at 50% 105%, rgb(90 105 130 / 0.16) 0%, transparent 70%), linear-gradient(180deg, #232830 0%, #15181d 55%, #000 100%)";
 
 /** A deep color glowing from the top of the card, over a dark base. */
 const tinted = (glow: string, soft: string, top: string) =>
-  `radial-gradient(85% 60% at 45% 8%, rgb(${glow} / 0.5) 0%, rgb(${glow} / 0.16) 52%, transparent 80%), radial-gradient(60% 60% at 0% 55%, rgb(${soft} / 0.2) 0%, transparent 75%), linear-gradient(180deg, ${top} 0%, #0e0e14 62%, #0a0a0e 100%)`;
+  `radial-gradient(85% 60% at 45% 8%, rgb(${glow} / 0.5) 0%, rgb(${glow} / 0.16) 52%, transparent 80%), radial-gradient(60% 60% at 0% 55%, rgb(${soft} / 0.2) 0%, transparent 75%), linear-gradient(180deg, ${top} 0%, #0b0b10 62%, #000 100%)`;
 
 const TONES = {
   slate: { background: CARD_BG, border: "rgb(255 255 255 / 0.12)" },
@@ -46,8 +46,26 @@ const TONES = {
   teal: { background: tinted("14 116 160", "20 140 180", "#0a2838"), border: "rgb(80 180 220 / 0.24)" },
 };
 
+/** Pure black in many small steps, so the fade stays smooth on OLED screens. */
 const BOTTOM_SHADE =
-  "radial-gradient(80% 80% at 100% 100%, #08090b 0%, rgb(8 9 11 / 0.8) 42%, transparent 100%), linear-gradient(180deg, transparent 42%, rgb(8 9 11 / 0.72) 68%, #08090b 90%)";
+  "radial-gradient(80% 80% at 100% 100%, #000 0%, rgb(0 0 0 / 0.9) 25%, rgb(0 0 0 / 0.62) 50%, rgb(0 0 0 / 0.26) 75%, transparent 100%), linear-gradient(180deg, transparent 38%, rgb(0 0 0 / 0.08) 44%, rgb(0 0 0 / 0.24) 50%, rgb(0 0 0 / 0.46) 56%, rgb(0 0 0 / 0.68) 62%, rgb(0 0 0 / 0.85) 68%, rgb(0 0 0 / 0.95) 74%, #000 82%)";
+/** The card's color is gone well before its bottom edge, so nothing bright can show there. */
+const COLOR_FADE =
+  "linear-gradient(180deg, #000 0%, #000 34%, rgb(0 0 0 / 0.8) 44%, rgb(0 0 0 / 0.5) 54%, rgb(0 0 0 / 0.24) 63%, rgb(0 0 0 / 0.08) 71%, transparent 78%)";
+/** Grain only where there is color: on near-black it shows as noise on OLED screens. */
+const GRAIN_FADE = "linear-gradient(180deg, #000 0%, #000 26%, rgb(0 0 0 / 0.5) 42%, transparent 58%)";
+/** The card's thin outline, which fades out before the bottom. */
+const CARD_RING: CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  padding: 1,
+  borderRadius: "inherit",
+  WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+  WebkitMaskComposite: "xor",
+  mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+  maskComposite: "exclude",
+  pointerEvents: "none",
+};
 
 type CardProps = {
   /** The card's background color. */
@@ -65,17 +83,16 @@ type CardProps = {
 
 /** A feature card: a still Spotlight pushed toward the bottom right and cropped by the card, with its line over the faded bottom. */
 export function SpotlightMockCard({ tone = "slate", query, lead, rest, panelWidth, fade = 1, children }: CardProps) {
-  const cardHeight = "clamp(480px, 46vw, 640px)";
+  const cardHeight = "clamp(400px, 34vw, 500px)";
   return (
     <article
-      className="relative w-[min(90vw,520px)] shrink-0 snap-start overflow-hidden rounded-[18px] border"
+      className="relative w-[min(82vw,520px)] shrink-0 snap-start overflow-hidden rounded-[14px]"
       style={
         {
           containerType: "inline-size",
-          borderColor: TONES[tone].border,
           "--glow": GLOW,
           height: cardHeight,
-          background: TONES[tone].background,
+          background: "#000",
           "--u": "1.7cqw",
           "--h": cardHeight,
         } as CSSProperties
@@ -83,8 +100,12 @@ export function SpotlightMockCard({ tone = "slate", query, lead, rest, panelWidt
     >
       <span
         aria-hidden
-        style={{ position: "absolute", inset: 0, backgroundImage: GRAIN, backgroundSize: "220px 220px", opacity: 0.22, mixBlendMode: "overlay", pointerEvents: "none" }}
-      />
+        style={{ position: "absolute", inset: 0, isolation: "isolate", background: TONES[tone].background, WebkitMaskImage: COLOR_FADE, maskImage: COLOR_FADE, pointerEvents: "none" }}
+      >
+        <span
+          style={{ position: "absolute", inset: 0, backgroundImage: GRAIN, backgroundSize: "220px 220px", opacity: 0.22, mixBlendMode: "overlay", WebkitMaskImage: GRAIN_FADE, maskImage: GRAIN_FADE }}
+        />
+      </span>
       <div
         aria-hidden
         style={{ position: "absolute", left: "clamp(28px, 8cqw, 72px)", top: "clamp(40px, 9cqw, 76px)", width: panelWidth ?? "max(540px, 128cqw)" }}
@@ -137,6 +158,7 @@ export function SpotlightMockCard({ tone = "slate", query, lead, rest, panelWidt
       </div>
       {/* the mockup sinks into black along the bottom and toward the bottom-right corner, under the card's line */}
       <span aria-hidden style={{ position: "absolute", inset: 0, background: BOTTOM_SHADE, pointerEvents: "none" }} />
+      <span aria-hidden style={{ ...CARD_RING, background: `linear-gradient(180deg, ${TONES[tone].border} 0%, ${TONES[tone].border} 40%, transparent 78%)` }} />
       <div style={{ position: "absolute", left: INSET, right: INSET, bottom: size(20, 2.4, 28) }}>
         <h3 className="max-w-[32rem] text-[clamp(1.0625rem,1.4vw,1.25rem)] leading-[1.32] font-medium tracking-[-0.015em] text-ink">
           {lead} <span className="font-normal text-ink-2">{rest}</span>

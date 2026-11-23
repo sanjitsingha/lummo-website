@@ -1,4 +1,5 @@
 import { APP_ICONS } from "@/components/AppIcons";
+import FeatureCarousel from "@/components/FeatureCarousel";
 import { CurrencyAnswer } from "@/components/FeatureDemos";
 import { MockCalc, MockHeading, MockQuickFiles, MockRow, MockSplit, SpotlightMockCard } from "@/components/SpotlightMock";
 
@@ -14,17 +15,11 @@ const RECENTLY_OPENED = [
 /** Everything on the hotkey, opening apps first, each shown in a still Spotlight mockup. */
 export default function FeatureGrid() {
   return (
-    <section id="features" aria-labelledby="features-title" className="w-full pt-24 lg:pt-36">
+    <section id="features" aria-labelledby="features-title" className="w-full pt-24 max-sm:pt-8 lg:pt-36">
       <h2 id="features-title" className="mb-12 text-center text-[clamp(1.25rem,1.8vw,1.625rem)] font-medium tracking-[-0.02em] text-ink lg:mb-16">
         One hotkey. <span className="text-ink-2">All of this.</span>
       </h2>
-      <div
-        className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto px-[calc(50%-min(45vw,260px))] pb-4 [scrollbar-width:none] [scroll-padding-inline:calc(50%-min(45vw,260px))] lg:gap-5 [&::-webkit-scrollbar]:hidden"
-        style={{
-          WebkitMaskImage: "linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%)",
-          maskImage: "linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%)",
-        }}
-      >
+      <FeatureCarousel>
         <SpotlightMockCard tone="purple" query="Figma" lead="Open anything." rest="Super quick.">
           <MockHeading>Top Hit</MockHeading>
           <MockRow name="Figma" icon={APP_ICONS.figma} selected />
@@ -61,7 +56,7 @@ export default function FeatureGrid() {
           {/* empty panel below the result, so the fade has room and the result stays clear */}
           <div style={{ height: 190 }} />
         </SpotlightMockCard>
-      </div>
+      </FeatureCarousel>
     </section>
   );
 }
