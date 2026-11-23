@@ -1,4 +1,5 @@
 import { APP_ICONS } from "@/components/AppIcons";
+import GradientBlinds from "@/components/GradientBlinds";
 import SystemDownload from "@/components/SystemDownload";
 import { getLatestRelease, RELEASES_URL } from "@/lib/release";
 
@@ -12,6 +13,27 @@ export default async function WhatIsLummo() {
       style={{ paddingTop: "clamp(112px, 17dvh, 168px)" }}
       className="relative isolate flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-5 pb-[clamp(24px,5dvh,64px)] text-center sm:px-10"
     >
+      {/* the light stays put at the top centre, and the bottom fades out into the page */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 [mask-image:linear-gradient(180deg,#000_0%,#000_60%,transparent_100%)]"
+      >
+        <GradientBlinds
+          gradientColors={["#000000", "#7c3aed"]}
+          angle={-39}
+          blindCount={16}
+          blindMinWidth={60}
+          spotlightRadius={0.5}
+          shine={0.68}
+          relief={0.5}
+          glow={0.4}
+          sway={0}
+          hoverTilt={0}
+          clickEffect="none"
+          noise={0.15}
+          lightPosition={{ x: 0.5, y: 0.1 }}
+        />
+      </div>
       <div aria-hidden className="hero-beam" />
       <h1 id="hero-title" className="sr-only">
         Everything you need, one hotkey away.
