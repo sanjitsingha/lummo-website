@@ -13,8 +13,8 @@ export default function SiteHeader() {
         <Image
           src="/lummo/logo.png"
           alt=""
-          width={616}
-          height={616}
+          width={292}
+          height={292}
           sizes="40px"
           loading="eager"
           draggable={false}

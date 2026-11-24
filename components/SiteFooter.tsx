@@ -17,7 +17,7 @@ export default function SiteFooter() {
       <div className="mx-auto flex max-w-[1512px] flex-col gap-5 px-6 py-8 sm:px-10 lg:px-16 lg:py-10">
         <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
           <div className="flex items-center gap-2.5 text-sm">
-            <Image src="/lummo/logo.png" alt="" width={616} height={616} sizes="24px" draggable={false} className="size-6 select-none" />
+            <Image src="/lummo/logo.png" alt="" width={292} height={292} sizes="24px" draggable={false} className="size-6 select-none" />
             <span>© 2026 lummo</span>
           </div>
           <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm sm:gap-x-8">

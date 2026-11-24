@@ -3,6 +3,16 @@ export type ChangelogEntry = { version: string; date: string; changes: string[] 
 /** What changed for people using lummo, newest first. Add each new release at the top. Build-only releases are left out. */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "0.1.35",
+    date: "2026-11-24",
+    changes: [
+      "A new lummo logo for the app, tray, installer and About page.",
+      "322 system commands on Windows that act directly: Wi-Fi, Bluetooth, volume and microphone, keep awake, power mode, sleep timeouts, taskbar, dark mode, window snapping and more.",
+      "The Shortcut page's category filter now works on Windows, with Settings pages sorted into the same categories.",
+      "A topic word on its own, such as \"wifi\", never flips a switch.",
+    ],
+  },
+  {
     version: "0.1.34",
     date: "2026-11-23",
     changes: [

@@ -55,7 +55,7 @@ function DownloadsPanel({ file }: { file: string }) {
     <div className="w-[80cqw] rounded-[3cqw] border border-black/[0.08] bg-white p-[4cqw] text-left shadow-[0_18px_40px_-14px_rgba(0,0,0,0.3)]">
       <p className="text-[4cqw] font-medium text-[#202020]">Downloads</p>
       <div className="mt-[3.5cqw] flex items-center gap-[3cqw] rounded-[2cqw] bg-[#f3f6fb] p-[3cqw]">
-        <Image src="/lummo/logo.png" alt="" width={616} height={616} sizes="48px" className="size-[10cqw] shrink-0" />
+        <Image src="/lummo/logo.png" alt="" width={292} height={292} sizes="48px" className="size-[10cqw] shrink-0" />
         <div className="min-w-0 flex-1">
           <p className="truncate text-[3.5cqw] text-[#202020]">{file}</p>
           <p className="mt-[1.2cqw] text-[3cqw] text-[#6e6e6e]">Done</p>
