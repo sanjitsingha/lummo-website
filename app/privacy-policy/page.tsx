@@ -5,7 +5,7 @@ import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
 const CONTACT_EMAIL = "contact@lummo.space";
-const LAST_UPDATED = "November 24, 2026";
+const LAST_UPDATED = "November 25, 2026";
 
 const title = "Privacy Policy - lummo";
 const description = "What the lummo app and website collect, what stays on your device, and how to turn usage statistics off.";
@@ -56,8 +56,10 @@ export default function PrivacyPolicyPage() {
             <Section id="usage-statistics" title="Usage statistics">
               <p>
                 To understand how lummo is used, the app sends anonymous statistics to{" "}
-                <ExternalLink href="https://aptabase.com">Aptabase</ExternalLink>. This is <strong>on by default</strong>{" "}
-                and you can turn it off in Settings → About.
+                <ExternalLink href="https://posthog.com/privacy">PostHog</ExternalLink>, which keeps them in the United States.
+                Versions 0.1.36 and earlier, including the Microsoft Store version until it is updated, send them to{" "}
+                <ExternalLink href="https://aptabase.com/legal/privacy">Aptabase</ExternalLink> instead. This is{" "}
+                <strong>on by default</strong> and you can turn it off in Settings → About.
               </p>
               <div className="space-y-4">
                 <Panel title="What is sent">
@@ -67,8 +69,9 @@ export default function PrivacyPolicyPage() {
                       "Whether Spotlight and the Caps Lock indicator are on",
                       "Daily counts of Spotlight opens and of the kinds of results opened",
                       "How often the Caps Lock indicator appeared or found no text cursor",
-                      "App version, operating system and version, and locale",
+                      "App version, operating system and version, processor type and locale",
                       "On Linux, the session type and desktop",
+                      "From version 0.1.37, a random ID for your installation, so we can count how many people use lummo. It is made the first time statistics are sent and is not based on you or your computer.",
                     ]}
                   />
                 </Panel>
@@ -84,6 +87,9 @@ export default function PrivacyPolicyPage() {
                   />
                 </Panel>
               </div>
+              <p>
+                Like any connection, sending statistics shows the service your IP address, which it may use to estimate your country.
+              </p>
             </Section>
 
             <Section id="connections" title="When the app goes online">

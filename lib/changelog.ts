@@ -3,6 +3,17 @@ export type ChangelogEntry = { version: string; date: string; changes: string[] 
 /** What changed for people using lummo, newest first. Add each new release at the top. Build-only releases are left out. */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "0.1.37",
+    date: "2026-11-25",
+    changes: [
+      "Settings pages in Spotlight have their own icons and clearer names, such as \"Open dark mode settings\", so they don't look like the actions that change the setting at once.",
+      "Actions have a new look that matches the icons in lummo's settings window.",
+      "Typing part of a name, such as \"photoshop\", suggests the full name, Adobe Photoshop. Press → to use it.",
+      "lummo no longer closes when you toggle Wi-Fi or Bluetooth on Windows.",
+      "Usage statistics now go to PostHog instead of Aptabase. The privacy policy explains what is sent.",
+    ],
+  },
+  {
     version: "0.1.35",
     date: "2026-11-24",
     changes: [
