@@ -30,27 +30,6 @@
     "href": "https://lummo.space"
   },
   "favicon": "/favicon.png",
-  "navbar": {
-    "links": [
-      {
-        "label": "Home",
-        "href": "https://lummo.space"
-      },
-      {
-        "label": "Changelog",
-        "href": "https://lummo.space/changelog"
-      },
-      {
-        "type": "github",
-        "href": "https://github.com/sanjitsingha/lumio"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Download",
-      "href": "https://lummo.space/download"
-    }
-  },
   "footer": {
     "socials": {
       "website": "https://lummo.space",
