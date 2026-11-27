@@ -1,0 +1,4 @@
+/* Hide the AI assistant button in the navbar */
+[data-layout-item="assistant-entry"] {
+  display: none;
+}
