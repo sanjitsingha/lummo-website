@@ -1,0 +1,96 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "lummo",
+  "description": "Documentation for lummo — Spotlight search, clipboard history, conversions and quick math for Windows and Linux.",
+  "colors": {
+    "primary": "#6D28D9",
+    "light": "#6BB1FE",
+    "dark": "#7C3AED"
+  },
+  "appearance": {
+    "default": "dark",
+    "strict": false
+  },
+  "background": {
+    "color": {
+      "dark": "#000000",
+      "light": "#FFFFFF"
+    }
+  },
+  "fonts": {
+    "family": "Inter"
+  },
+  "icons": {
+    "library": "lucide"
+  },
+  "logo": {
+    "light": "/images/logo.png",
+    "dark": "/images/logo.png",
+    "href": "https://lummo.space"
+  },
+  "favicon": "/favicon.png",
+  "navbar": {
+    "links": [
+      {
+        "label": "Home",
+        "href": "https://lummo.space"
+      },
+      {
+        "label": "Changelog",
+        "href": "https://lummo.space/changelog"
+      },
+      {
+        "type": "github",
+        "href": "https://github.com/sanjitsingha/lumio"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Download",
+      "href": "https://lummo.space/download"
+    }
+  },
+  "footer": {
+    "socials": {
+      "website": "https://lummo.space",
+      "github": "https://github.com/sanjitsingha/lumio"
+    },
+    "links": [
+      {
+        "header": "lummo",
+        "items": [
+          {
+            "label": "Download",
+            "href": "https://lummo.space/download"
+          },
+          {
+            "label": "Changelog",
+            "href": "https://lummo.space/changelog"
+          },
+          {
+            "label": "Privacy Policy",
+            "href": "https://lummo.space/privacy-policy"
+          }
+        ]
+      }
+    ]
+  },
+  "seo": {
+    "indexing": "navigable",
+    "metatags": {
+      "og:site_name": "lummo Docs"
+    }
+  },
+  "search": {
+    "prompt": "Search lummo docs..."
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Getting Started",
+        "pages": ["index"]
+      }
+    ]
+  }
+}

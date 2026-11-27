@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "docs:dev": "cd docs && npx --yes mint dev",
+    "docs:validate": "cd docs && npx --yes mint validate",
+    "docs:links": "cd docs && npx --yes mint broken-links"
   },
   "dependencies": {
     "motion": "^14.9.0",
