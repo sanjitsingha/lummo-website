@@ -67,8 +67,11 @@
   "navigation": {
     "groups": [
       {
-        "group": "Introduction",
-        "pages": ["index"]
+        "group": "Quick Start",
+        "pages": [
+          "index",
+          "untitled-page"
+        ]
       }
     ]
   }
