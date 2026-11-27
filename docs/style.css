@@ -2,3 +2,11 @@
 [data-layout-item="assistant-entry"] {
   display: none;
 }
+
+/* Move the navbar search bar to the right side (desktop) */
+@media (min-width: 1024px) {
+  [data-layout-item="topbar"] [data-layout-item="search-entry"] {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
